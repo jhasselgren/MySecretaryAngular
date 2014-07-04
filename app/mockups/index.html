@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Bootply.com - Greenfield Template</title>
+<meta name="generator" content="Bootply" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="" type="text/css" rel="stylesheet">
+<!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+<link rel="shortcut icon" href="/bootstrap/img/favicon.ico">
+<link rel="apple-touch-icon" href="/bootstrap/img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72"
+	href="/bootstrap/img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114"
+	href="/bootstrap/img/apple-touch-icon-114x114.png">
+<link href="components/font-awesome-4.1.0/css/font-awesome.min.css"
+	type="text/css" rel="stylesheet">
+
+
+
+
+
+
+
+
+
+<!-- CSS code from Bootply.com editor -->
+
+<style type="text/css">
+/* -- custom css for Bootstrap 3.x --*/
+
+/* move special fonts to HTML head for better performance */
+@import
+	url('http://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600')
+	;
+
+html,body {
+	height: 100%;
+	width: 100%;
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* fix bs3 horizontal scrollbar bug */
+.row {
+	margin: 0;
+	padding: 0
+}
+
+h1 {
+	font-size: 45px;
+}
+
+img.grayscale {
+	filter:
+		url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+	/* Firefox 10+, Firefox on Android */
+	filter: gray; /* IE6-9 */
+	-webkit-filter: grayscale(100%);
+	/* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+
+.icon-bar {
+	background-color: #fff;
+}
+
+.scroll-down a,.scroll-top a {
+	color: #ffffff;
+}
+
+.scroll-down {
+	position: fixed;
+	bottom: 20%;
+	right: 0%;
+	color: #f9f9f9;
+}
+
+.scroll-top {
+	background-color: #33ee67;
+}
+
+.header .btn-lg {
+	font-size: 28px;
+	border-color: #eeeeee;
+	padding: 15px;
+	background-color: transparent;
+	color: #ffffff;
+}
+
+.header .btn-lg:hover {
+	background-color: #eeeeee;
+	color: #777777;
+}
+
+.navbar a {
+	color: #fff;
+}
+
+.navbar-bold.affix {
+	background-color: #33ee67;
+}
+
+.navbar-bold {
+	background-color: #11cc45;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.navbar-bold li a:hover,.navbar-bold li.active {
+	background-color: #22dd56;
+}
+
+.vert {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	padding-top: 4%;
+}
+
+.header h1 {
+	font-size: 110px;
+	-webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+	color: #431a6d;
+	color: #fff;
+	margin-left: -5px;
+	margin-bottom: 5px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.header .lead {
+	color: #eeeeee;
+	font-size: 25px;
+}
+
+.header {
+	height: 80%;
+	background: #11cc45
+		url('http://www.bootply.com/assets/example/pt_squares_lg.png') repeat
+		center center fixed;
+}
+
+.blurb {
+	padding: 120px 0;
+	background-color: #fefefe;
+}
+
+.blurb .panel {
+	background-color: transparent;
+}
+
+.bright {
+	background: #7fbbda
+		url('http://www.bootply.com/assets/example/bg_suburb.jpg') no-repeat
+		center center fixed;
+	color: #fff;
+}
+
+.featurette {
+	background: #545455;
+	padding: 50px 0;
+	color: #ffffff;
+}
+
+.featurette-item {
+	margin-bottom: 15px;
+}
+
+.featurette-item>i {
+	border: 3px solid #ffffff;
+	border-radius: 50%;
+	display: inline-block;
+	font-size: 56px;
+	width: 140px;
+	height: 140px;
+	line-height: 136px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.featurette-item>i:hover {
+	font-size: 68px;
+}
+
+.featurette .panel {
+	margin-top: 10px;
+	background-color: transparent;
+}
+
+.featurette .panel-footer {
+	color: #333;
+}
+
+.callout {
+	color: #ffffff;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	background: url('http://www.bootply.com/assets/example/bg_suburb.jpg')
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.callout .well
+{
+	color: #333;
+}
+
+.gallery {
+	padding: 50px 0;
+}
+
+.call-to-action {
+	background: #eeeeee;
+	padding: 50px 0;
+}
+
+.call-to-action .btn {
+	margin: 10px;
+}
+
+.panel-heading {
+    padding: 10px 5px;
+}
+
+footer {
+	padding: 100px 0;
+}
+
+/* -- end custom css for Bootstrap 3.x --*/
+</style>
+</head>
+
+<!-- HTML code from Bootply.com editor -->
+
+<body>
+
+
+	<div class="navbar navbar-fixed-top navbar-bold" data-spy="affix"
+		data-offset-top="1000">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Home</a> <a class="navbar-toggle"
+					data-toggle="collapse" data-target=".navbar-collapse"> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar">
+				<ul class="nav navbar-nav">
+					<li><a href="#sec1">Section 1</a></li>
+					<li><a href="#sec2">Section 2</a></li>
+					<li><a href="#sec3">Section 3</a></li>
+					<li><a href="#sec4">Section 4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="header vert">
+		<div class="container">
+			<h1>Create a As-Is</h1>
+			<p class="lead">Show a overview of DDS System</p>
+			<div>&nbsp;</div>
+			<a href="#" class="btn btn-default btn-lg">Create new thing</a>
+		</div>
+	</div>
+
+	<div id="sec1" class="blurb">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-12 text-center">
+					<h1>Overview</h1>
+					<p class="lead">We should create a picture that show all
+						compoment inside DDS Core and all contected systems. The goal is
+						to get a good understanding of what DDS consist of</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="featurette" id="sec2">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1">
+					16 <br /> Juni
+				</div>
+				<div class="col-md-11">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>Meting 2014-06-10</h1>
+							<p>Mauris eu feugiat lorem, posuere sagittis eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ornare mi sem, eget rutrum lorem mollis vitae. Sed fermentum risus nec sagittis mattis. Quisque ac lacus sed justo pretium pharetra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut porttitor sollicitudin justo vel fermentum. Duis ac tellus enim. Suspendisse facilisis aliquet velit ut adipiscing. Phasellus vulputate neque commodo pellentesque gravida. Quisque lacinia laoreet pharetra. Curabitur metus diam, elementum eu lacus et, scelerisque scelerisque ante. Morbi fermentum gravida dui in semper. Nam lacinia fermentum est ultrices tincidunt.</p>
+							<p>Ut luctus tortor eu urna posuere accumsan. Etiam id feugiat turpis, sed elementum neque. Integer tristique eros in semper consequat. Nunc risus ante, rhoncus a nunc non, auctor elementum dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis vulputate id metus vitae blandit.</p>
+							<p>Etiam congue velit ligula, a adipiscing nunc tempor eget. Praesent dapibus id erat id mattis. Mauris turpis arcu, dapibus at lectus non, posuere egestas nisi. Mauris nulla lacus, rutrum vel ornare nec, tincidunt id erat. Praesent feugiat ut mauris sed malesuada. Nulla id massa aliquam, placerat tortor aliquam, molestie mauris. Phasellus vulputate nunc ut lectus vestibulum ultrices. Cras gravida, lacus at tincidunt egestas, nibh est varius tellus, vitae gravida nulla massa ac augue. Donec eu purus tellus. Nulla eget diam malesuada, elementum diam pharetra, sodales libero.</p>			
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="panel panel-default">
+								<div class="panel-heading text-center">
+									<p><b>
+										AP: Boka möte
+									</b></p>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-square-o  fa-3x"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="panel panel-default">
+								<div class="panel-heading text-center">
+									<p><b>
+										Systemkarta AS-IS Norge
+									</b></p>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-file-pdf-o fa-3x"></i>
+								</div>
+								<div class="panel-footer text-center">
+									Beskriver hur DDS ser ut idag med huvudmoduler samt sammankopplade system
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="panel panel-default">
+								<div class="panel-heading text-center">
+									<p><b>
+										Skapa en To-Be Systemkarta
+									</b></p>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-check-square-o fa-3x"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="callout" id="sec3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1 text-center">
+					17 <br /> Juni
+				</div>
+				<div class="col-md-11 well well-lg">
+					<h2><i class="fa fa-file-archive-o fa-border"></i> Dokumentation om DDS </h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="callout">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1 text-center">
+					19 <br /> Juni
+				</div>
+				<div class="col-md-11 well well-lg ">
+					<h2><i class="fa fa-file-archive-o fa-border"></i> DDS Källkod </h2>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="blurb" id="sec4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h1 class="text-center">This is what I have ToDo</h1>
+					<div class="col-md-8 col-md-offset-2">
+						<div class="row">
+							<div class="col-md-12">
+								<h2><i class="fa fa-square-o"></i> Skapa mötesantekningar</h2>
+								<div class="row">
+									<div class="col-md-4">
+										<p>Created: 2014-07-21</p>
+									</div>
+									<div class="col-md-4">
+										<p>Deadline: 2014-07-21</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="progress">
+										  <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+										    <span class="sr-only">45% Complete</span>
+										  </div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<i class="fa fa-ellipsis-h fa-2x fa-border"></i>
+									</div>
+								</div>
+							</div>
+							</div>
+						<div class="row">
+							<div class="col-md-12">
+								<h2><i class="fa fa-square-o"></i> Skapa mötesantekningar</h2>
+								<div class="row">
+									<div class="col-md-4">
+										<p>Created: 2014-07-21</p>
+									</div>
+									<div class="col-md-4">
+										<p>Deadline: 2014-07-21 <i class="fa fa-exclamation-triangle text-warning"></i></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="progress">
+										  <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+										    <span class="sr-only">45% Complete</span>
+										  </div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<i class="fa fa-ellipsis-h fa-2x fa-border"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="blurb" id="sec4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>This is what I have done</h1>
+					<div class="col-md-8 col-md-offset-2 well well-lg">
+						<i class="fa fa-check-square-o  fa-3x pull-left "></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type='text/javascript'
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+	<script type='text/javascript'
+		src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+	<!-- JavaScript jQuery code from Bootply.com editor  -->
+
+	<script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+            /* smooth scrolling for scroll to top */
+			$('.scroll-top').click(function(){
+			  $('body,html').animate({scrollTop:0},1000);
+			})
+			/* smooth scrolling for scroll down */
+			$('.scroll-down').click(function(){
+			  $('body,html').animate({scrollTop:$(window).scrollTop()+800},1000);
+			})
+
+			/* highlight the top nav as scrolling occurs */
+			$('body').scrollspy({ target: '#navbar' })
+
+        
+        });
+        
+        </script>
+
+	<script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-40413119-1', 'bootply.com');
+          ga('send', 'pageview');
+        </script>
+	<!-- Quantcast Tag -->
+	<script type="text/javascript">
+        var _qevents = _qevents || [];
+        
+        (function() {
+        var elem = document.createElement('script');
+        elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+        elem.async = true;
+        elem.type = "text/javascript";
+        var scpt = document.getElementsByTagName('script')[0];
+        scpt.parentNode.insertBefore(elem, scpt);
+        })();
+        
+        _qevents.push({
+        qacct:"p-0cXb7ATGU9nz5"
+        });
+        </script>
+</body>
+</html>
