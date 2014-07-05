@@ -11,7 +11,7 @@ app.factory("sharedDataService", function() {
 	sharedDataService.currentActivity = {};
 	
 	
-	sharedDataService.currentActivity = function(newObj){
+	sharedDataService.setCurrentActivity = function(newObj){
 		this.currentActivity = newObj;
 	};
 	

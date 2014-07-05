@@ -198,3 +198,19 @@ img.grayscale {
 footer {
 	padding: 100px 0;
 }
+
+.ta-editor {
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}
+
+.ta-scroll-window .ta-bind{
+	min-height: 100px;
+}
+
+.ta-scroll-window.form-control{
+	height: auto;
+}

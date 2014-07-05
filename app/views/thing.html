@@ -1,0 +1,78 @@
+	<div class="navbar navbar-fixed-top navbar-bold" data-spy="affix"
+		data-offset-top="1000">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Home</a> <a class="navbar-toggle"
+					data-toggle="collapse" data-target=".navbar-collapse"> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar">
+				<ul class="nav navbar-nav">
+					<li><a href="#sec1">Section 1</a></li>
+					<li><a href="#sec2">Section 2</a></li>
+					<li><a href="#sec3">Section 3</a></li>
+					<li><a href="#sec4">Section 4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	
+	<div id="sec1" class="blurb">
+		<div class="container">
+			<div class="row" ng-if="thing.type=='TEXT'">
+				<div class="col-md-12">
+					<h1>Edit Text</h1>
+					<form role="form">
+						<div class="form-group">
+							<label>Name:</label>
+							<input type="text" class="form-control" ng-model="thing.name"> 
+						</div>
+						<div class="form-group">
+							<text-angular ng-model="thing.text" ta-toolbar="[['h3','h4','h5','h6','p','pre','quote'],['bold','italics', 'underline'],['ul','ol'],['justifyLeft','justifyCenter','justifyRight'],['html']]"></text-angular>
+						</div>
+						<div ng-repeat="subThing in thing.things" ng-switch="subThing.type">
+							<hr>
+							<div class="well" ng-switch-when="TODO">
+								<div class="row" style="margin-bottom: 6px">
+									<div class="pull-left"><h4>ToDo</h4></div>
+									<div class="pull-right"><i class="fa fa-trash-o"></i></div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label>Title</label>
+										<input class="form-control" ng-model="subThing.name">
+									</div>
+									<div class="form-group">
+										<label>Description</label>
+										<text-angular ng-model="subThing.description" ta-toolbar="[['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+									</div>
+									<div class="form-group">
+										<label>Progress</label>
+										<input class="form-control" ng-model="subThing.progress"></textarea>
+									</div>
+									<div class="form-group">
+										<label>Completed:</label> 
+										<p style="cursor: pointer;" ng-click="subThing.completed = ! subThing.completed">
+											<i ng-if="!subThing.completed" class="fa fa-square-o fa-2x"></i>
+											<i ng-if="subThing.completed" class="fa fa-check-square-o fa-2x"></i>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="well" ng-switch-when="FILE">
+								<div class="row" style="margin-bottom: 6px">
+									<div class="pull-left"><h4>File</h4></div>
+									<div class="pull-right"><i class="fa fa-trash-o"></i></div>
+								</div>
+							</div>	
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
