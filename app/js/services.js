@@ -1,9 +1,29 @@
 'use strict';
 
 /* Services */
+app.value('version', '0.1');
 
+app.value("backEndAdress","http://localhost:8080");
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('myApp.services', []).
-  value('version', '0.1');
+app.factory("sharedDataService", function() {
+	
+	var sharedDataService = {};
+	sharedDataService.currentActivity = {};
+	
+	
+	sharedDataService.currentActivity = function(newObj){
+		this.currentActivity = newObj;
+	};
+	
+	return sharedDataService;
+});
+
+app.factory('activityDataService', function($http, backEndAdress){
+	var activityDataService = {};
+	
+	activityDataService.getById = function(id){
+		return $http.get(backEndAdress+ "/activity/" +id);
+	};
+	
+	return activityDataService;
+});

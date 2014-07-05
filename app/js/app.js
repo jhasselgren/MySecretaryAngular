@@ -1,16 +1,27 @@
+//$(document).ready(function() {
+//    
+//    /* smooth scrolling for scroll to top */
+//	$('.scroll-top').click(function(){
+//	  $('body,html').animate({scrollTop:0},1000);
+//	})
+//	
+//	/* smooth scrolling for scroll down */
+//	$('.scroll-down').click(function(){
+//	  $('body,html').animate({scrollTop:$(window).scrollTop()+800},1000);
+//	})
+//
+//	/* highlight the top nav as scrolling occurs */
+//	$('body').scrollspy({ target: '#navbar' })
+//});
+
 'use strict';
 
-
 // Declare app level module which depends on filters, and services
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
+var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
+
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/activity', {templateUrl: 'views/activity.html', controller: 'ActivityController'});
+  $routeProvider.otherwise({redirectTo: '/activity'});
 }]);
+
+
