@@ -6,13 +6,18 @@ app.controller('ActivityController', function($scope, $sce, $location, activityD
 		
 		var activity = $scope.activity = {};
 		
-		activityDataService.getById('test')
-		.success(function(data){
-			$scope.activity = data;
-			
-			sharedDataService.setCurrentActivity($scope.activity);
-			
-		});	
+		if($.isEmptyObject(sharedDataService.currentActivity)){
+			activityDataService.getById('test')
+			.success(function(data){
+				$scope.activity = data;
+				
+				sharedDataService.setCurrentActivity($scope.activity);
+				
+			});	
+		}
+		else{
+			$scope.activity = sharedDataService.currentActivity;
+		}
 	}
 	
 	$scope.editThing = function(thing){

@@ -13,6 +13,7 @@
     "html5-boilerplate": "~4.3.0",
     "angular-bootstrap": ">=0",
     "angular-sanitize": ">=1",
-    "textAngular": ">=1"
+    "textAngular": ">=1",
+    "angular-upload": ">=1"
   }
 }

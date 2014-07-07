@@ -10,20 +10,17 @@
 			</div>
 			<div class="navbar-collapse collapse" id="navbar">
 				<ul class="nav navbar-nav">
-					<li><a href="#sec1">Section 1</a></li>
-					<li><a href="#sec2">Section 2</a></li>
-					<li><a href="#sec3">Section 3</a></li>
-					<li><a href="#sec4">Section 4</a></li>
+					<li><a href="#sec1">Save</a></li>
+					<li><a ng-click="cancel()" >Cancel</a></li>
+					<li ng-if="thing.type=='TEXT'"><a ng-click="startCreateNewThing()">Add thing</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-
-	
 	<div id="sec1" class="blurb">
-		<div class="container">
-			<div class="row" ng-if="thing.type=='TEXT'">
+		<div class="container" ng-if="thing.type=='TEXT'">
+			<div class="row">
 				<div class="col-md-12">
 					<h1>Edit Text</h1>
 					<form role="form">
@@ -39,7 +36,16 @@
 							<div class="well" ng-switch-when="TODO">
 								<div class="row" style="margin-bottom: 6px">
 									<div class="pull-left"><h4>ToDo</h4></div>
-									<div class="pull-right"><i class="fa fa-trash-o"></i></div>
+									<div class="pull-right" style="cursor: pointer;" ng-click="showDelete=true">
+										
+										<i class="fa fa-trash-o"></i>
+									</div>
+								</div>
+								<div class="row" ng-show="showDelete">
+									<p>Are you sure that you want do delete this ToDo?</p>
+									<button class="btn btn-default btn-xs" ng-click="showDelete = false">Cancel</button>
+									<button class="btn btn-danger btn-xs" ng-click="deleteSubThing(subThing)">Delete</button>
+									<hr>
 								</div>
 								<div class="row">
 									<div class="form-group">
@@ -48,11 +54,15 @@
 									</div>
 									<div class="form-group">
 										<label>Description</label>
-										<text-angular ng-model="subThing.description" ta-toolbar="[['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+										<text-angular ng-model="subThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+									</div>
+									<div class="form-group">
+										<label>Deadline</label>
+										<input type="date" id="exampleInput" name="input" placeholder="yyyy-MM-dd" class="form-control" ng-model="subThing.deadline">
 									</div>
 									<div class="form-group">
 										<label>Progress</label>
-										<input class="form-control" ng-model="subThing.progress"></textarea>
+										<input class="form-control" min="0" max="100" ng-model="subThing.progress">
 									</div>
 									<div class="form-group">
 										<label>Completed:</label> 
@@ -66,11 +76,82 @@
 							<div class="well" ng-switch-when="FILE">
 								<div class="row" style="margin-bottom: 6px">
 									<div class="pull-left"><h4>File</h4></div>
-									<div class="pull-right"><i class="fa fa-trash-o"></i></div>
+									<div class="pull-right" style="cursor: pointer;" ng-click="showDelete=true">
+										<i class="fa fa-trash-o"></i>
+									</div>
+								</div>
+								<div class="row" ng-show="showDelete">
+									<p>Are you sure that you want do delete this File?</p>
+									<button class="btn btn-default btn-xs" ng-click="showDelete = false">Cancel</button>
+									<button class="btn btn-danger btn-xs" ng-click="deleteSubThing(subThing)">Delete</button>
+									<hr>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<h4 ng-switch="subThing.fileType">
+												<i ng-switch-default class="fa fa-file-o  "></i>
+												<i ng-switch-when="zip" class="fa fa-file-archive-o "></i>
+												<i ng-switch-when="excel" class="fa fa-file-excel-o "></i>
+												<i ng-switch-when="pdf" class="fa fa-file-pdf-o "></i>
+												<i ng-switch-when="word" class="fa fa-file-word-o "></i>
+												<i ng-switch-when="powerpoint" class="fa fa-file-powerpoint-o "></i>
+												{{ thing.name }} 
+											</h4>
+										</div>
+										<div class="form-group">
+											<label>Description</label>
+											<text-angular ng-model="subThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+										</div>
+									</div>
 								</div>
 							</div>	
 						</div>
 					</form>
+				</div>
+			</div>
+			<div id="AddSubThing" class="row" ng-show="addSubThing">
+				<div class="col-md-12">
+					<h1>Add thing:</h1>
+					<div class="form-group">
+						<label>Type</label>
+						<select class="form-control" ng-model="newThing.type">
+							<option value="">Choose type..</option>
+							<option value="TODO">ToDo</option>
+							<option value="FILE">File</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-12" ng-show="newThing.type == 'TODO'">
+					<div class="form-group">
+						<label>Title</label>
+						<input class="form-control" ng-model="newThing.name">
+					</div>
+					<div class="form-group">
+						<label>Description</label>
+						<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+					</div>
+					<div class="form-group">
+						<label>Deadline</label>
+						<input type="date" id="exampleInput" name="input" placeholder="yyyy-MM-dd" class="form-control" ng-model="newThing.deadline">
+					</div>
+				</div>
+				<div class="col-md-12" ng-show="newThing.type == 'FILE'">
+					<div class="form-group">
+						<label>Description</label>
+						<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+					</div>
+					<upload-button
+				          class="btn btn-primary btn-upload"
+				          url="http://localhost:8080/file/upload"
+				          data="uploadData"
+				          on-success="fileSaved(response)"
+				          on-upload="onUpload()"
+				        >Fileupload</upload-button>
+				</div>
+				<div class="col-md-12">
+					<button class="btn btn-default btn-sm" ng-click="cancelCreateNewSubThing()">Cancel</button>
+					<button class="btn btn-default btn-sm" ng-show="newThing.type" ng-click="saveNewThing()">Save</button>
 				</div>
 			</div>
 		</div>

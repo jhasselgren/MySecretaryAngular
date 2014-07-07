@@ -75,8 +75,7 @@
 										</p>
 									</div>
 									<div class="panel-footer text-center col-md-12" ng-show="showDetails">
-										<div class="row">
-											{{ subThing.description }}
+										<div class="row" ng-bind-html="subThing.description">
 										</div>
 										<div ng-if="subThing.type=='TODO'" class="row-fluid">
 											<div ng-click="subThing.progress =  subThing.progress-10" class="pull-left" style="margin-right: 5px; cursor: pointer;">

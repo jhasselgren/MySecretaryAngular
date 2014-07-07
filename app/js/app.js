@@ -17,7 +17,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'textAngular']);
+var app = angular.module('myApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'textAngular', 'lr.upload']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/activity', {templateUrl: 'views/activity.html', controller: 'ActivityController'});
