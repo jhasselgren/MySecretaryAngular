@@ -19,8 +19,9 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 	
 	function setup(index){
 		var thingIndex = $scope.index = index;
+		$scope.activity = sharedDataService.currentActivity;
 		$scope.addSubThing = false;
-		$scope.thing = sharedDataService.currentActivity.things[thingIndex]
+		$scope.thing = $scope.activity.things[thingIndex]
 		$scope.oldThing = angular.copy($scope.thing)
 	}
 	
@@ -57,8 +58,6 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 		
 		$scope.addSubThing = true;
 		$scope.newThing = {};
-		
-		
 	}
 	
 	$scope.cancelCreateNewSubThing = function(){
@@ -66,11 +65,12 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 		$scope.newThing = {};
 	}
 	
-	$scope.saveNewThing = function(){
-		
-		var newSubThing = angular.copy($scope.newThing);
-		
-		$scope.thing.things.push(newSubThing);
+	$scope.saveNewThing = function(){		
+		activityDataService.addSubThing($scope.activity.id, $scope.thing.id, $scope.newThing)
+			.success(function(data){
+				$scope.activity = data;
+				sharedDataService.setCurrentActivity($scope.activity);
+			});
 		
 		$scope.newThing = {};
 		$scope.addSubThing = false;

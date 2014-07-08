@@ -25,5 +25,10 @@ app.factory('activityDataService', function($http, backEndAdress){
 		return $http.get(backEndAdress+ "/activity/" +id);
 	};
 	
+	activityDataService.addSubThing = function(activityId, thingId, subThing){
+		return $http.post(backEndAdress+ '/activity/'+activityId+'/'+thingId, subThing);
+	};
+	
 	return activityDataService;
 });
+
