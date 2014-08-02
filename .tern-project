@@ -1,1 +1,1 @@
-{"ide":{"scriptPaths":[{"type":"FOLDER","path":"app/components/bootstrap-3.2.0-dist/js"},{"type":"FOLDER","path":"app/components/jQuery-1.11.1"},{"type":"FOLDER","path":"app/js"}]},"plugins":{"angular":{}},"libs":["browser","ecma5"]}
+{"ide":{"scriptPaths":[{"type":"FOLDER","path":"app/components/bootstrap-3.2.0-dist/js"},{"type":"FOLDER","path":"app/components/jQuery-1.11.1"},{"type":"FOLDER","path":"app/js"},{"type":"FOLDER","path":"app/bower_components/ng-flow/dist"}]},"plugins":{"angular":{}},"libs":["browser","ecma5","jquery"]}

@@ -1,0 +1,307 @@
+
+/*
+	Fonts
+*/
+
+@import
+	url('http://fonts.googleapis.com/css?family=Open+Sans:200,300,400,600')
+	;
+
+@font-body: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@font-header: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+@font-size-base: 12px;
+
+@font-size-title: floor((@font-size-base * 5));
+
+
+@font-size-h1: floor((@font-size-base * 2.6)); // ~36px
+@font-size-h2: floor((@font-size-base * 2.15)); // ~30px
+@font-size-h3: ceil((@font-size-base * 1.7)); // ~24px
+@font-size-h4: ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h5: @font-size-base;
+@font-size-h6: ceil((@font-size-base * 0.85)); // ~12px
+
+
+html, body{
+	height: 100%;
+	width: 100%;
+	font-family: @font-body;
+	font-size: @font-size-base;
+}
+
+h1{
+	font-size: @font-size-h1;
+}
+
+/* fix bs3 horizontal scrollbar bug */
+.row {
+	margin: 0;
+	padding: 0
+}
+
+.grayscale{
+	img{
+		filter:
+		url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+		/* Firefox 10+, Firefox on Android */
+		filter: gray; /* IE6-9 */
+		-webkit-filter: grayscale(100%);
+		/* Chrome 19+, Safari 6+, Safari 6+ iOS */
+	}
+}
+
+.header{
+	
+	height: 80%;
+	background: #11d045 /*#11cc45*/
+		url('http://www.bootply.com/assets/example/pt_squares_lg.png') repeat
+		center center fixed;
+		
+	h1 {
+		font-size: @font-size-title;
+		-webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+		color: #431a6d;
+		color: #fff;
+		margin-left: -5px;
+		margin-bottom: 5px;
+		font-family: @font-header;
+	}
+	
+	.lead {
+		color: #eeeeee;
+		font-size: ceil(@font-size-title*0.33);
+	}
+	
+	.btn-lg{
+		font-size: ceil(@font-size-title*0.33);
+		border-color: #eeeeee;
+		padding: @font-size-base;
+		background-color: transparent;
+		color: #ffffff;
+		
+		&#hover{
+			background-color: #eeeeee;
+			color: #777777;
+		}
+	}
+}
+
+.navbar{
+	a {
+		color: #fff;
+	}
+}
+
+.navbar-bold {
+	background-color: #11cc45;
+	font-family: @font-header;
+	
+	.affix {
+		background-color: #33ee67;
+	}
+	
+	li a:hover, li.active {
+		background-color: #22dd56;
+	}
+}
+
+.vert {
+	vertical-align: middle;
+	width: 100%;
+	height: 100%;
+	padding: 7% 0;
+}
+
+.blurb {
+	padding: 60px 0;
+	background-color: #fff;
+	
+	.panel {
+		background-color: transparent;
+	}
+	
+	.item {
+		position: relative;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	.menu {
+		
+			
+		position: absolute;
+		top:0;
+		right: 0;
+		
+		>i{
+			cursor: pointer;
+			&:hover{
+				color: #777777;
+			}
+		}
+	}
+}
+
+.bright {
+	background: #7fbbda
+		url('http://www.bootply.com/assets/example/bg_suburb.jpg') no-repeat
+		center center fixed;
+	color: #fff;
+}
+
+.featurette {
+	background: #545455;
+	padding: 50px 0;
+	color: #ffffff;
+	
+	.panel {
+		margin-top: 10px;
+		background-color: transparent;
+	}
+	
+	.panel-footer {
+		color: #333;
+	}
+}
+
+.featurette-item {
+	margin-bottom: 15px;
+	
+	>i {
+		border: 3px solid #ffffff;
+		border-radius: 50%;
+		display: inline-block;
+		font-size: @font-size-title;
+		width: 140px;
+		height: 140px;
+		line-height: 136px;
+		vertical-align: middle;
+		text-align: center;
+		
+		&:hover{
+			font-size: ceil(@font-size-title*1.1);
+		}
+	}
+}
+
+.callout {
+	color: #ffffff;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	background: url('http://www.bootply.com/assets/example/bg_suburb.jpg')
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	.well{
+		color: #333;
+	}
+	
+	
+}
+
+.gallery {
+	padding: 50px 0;
+}
+
+.call-to-action {
+	background: #eeeeee;
+	padding: 50px 0;
+	
+	.btn {
+		margin: 10px;
+	}
+}
+
+.panel-heading {
+    padding: 10px 5px;
+}
+
+.panel-footer{ 
+	.progress{
+		margin-top: 20px;
+	}
+}
+
+footer {
+	padding: 100px 0;
+}
+
+.icon-bar {
+	color: #fff;
+}
+
+.ta-editor {
+	min-height: auto !important;
+    height: auto !important;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}
+
+.ta-scroll-window{
+	.ta-bind{
+		min-height: 100px;
+	}
+	.form-control{
+		height: auto;
+	}
+}
+
+.scroll-top {
+	background-color: #33ee67;
+	
+	a{
+		color: #ffffff;
+	}
+}
+
+.scroll-down {
+	position: fixed;
+	bottom: 20%;
+	right: 0%;
+	color: #f9f9f9;
+	
+	a{
+		color: #ffffff;
+	}
+}
+
+.btn-upload {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  padding: 12px 50px;
+  
+  input {
+  	top: 0;
+  	left:0;
+    opacity: 0;
+    filter: ~"alpha(opacity=0)";
+    font-size: 23px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+  }
+}
+
+.ta-scroll-window {
+	.form-control{
+	    font-family: inherit;
+	    font-size: 100%;
+	    height: auto;
+	    overflow: auto;
+	    padding: 0;
+	    position: relative;
+	}
+}
+
+

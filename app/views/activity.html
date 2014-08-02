@@ -21,8 +21,8 @@
 
 	<div class="header vert">
 		<div class="container">
-			<h1>{{ activity.name }}</h1>
-			<p class="lead">{{ activity.shortDescription }}</p>
+			<h1>{{ data.currentActivity.name }}</h1>
+			<p class="lead">{{ data.currentActivity.shortDescription }}</p>
 			<div>&nbsp;</div>
 			<a href="#" class="btn btn-default btn-lg">Create new thing</a>
 		</div>
@@ -32,27 +32,27 @@
 		<div class="container">
 			<div class="row">
 
-				<div class="col-md-12 text-center">
+				<div class="col-xs-12 text-center">
 					<h1>Overview</h1>
-					<p class="lead">{{ activity.description }}</p>
+					<p class="lead">{{ data.currentActivity.description }}</p>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div ng-repeat="thing in activity.things | filter: {type: '!TODO'} ">
+	<div ng-repeat="thing in data.currentActivity.things | filter: {type: '!TODO'} ">
 		<div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
 			<div class="container">
 				<div class="row-fluid">
 					<div class="pull-right">
 				 		<span ng-click="editThing(thing)" style="cursor: pointer;"><i class="fa fa-pencil"></i></span> | <i class="fa fa-trash-o"></i>
 					</div>
-					<div class="col-md-1 text-center pull-left">
+					<div class="col-xs-1 text-center pull-left">
 						{{ thing.created | date : 'd'}}<br />
 						{{ thing.created | date : 'MMMM'}}
 					</div>
-					<div class="col-md-11">
+					<div class="col-xs-11">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-xs-12">
 								<h1>{{ thing.name }}</h1>
 								<span ng-bind-html="thing.text"></span>
 							</div>
@@ -74,7 +74,7 @@
 											<span ng-switch-when="FILE"><i class="fa fa-file-pdf-o fa-3x"></i></span>
 										</p>
 									</div>
-									<div class="panel-footer text-center col-md-12" ng-show="showDetails">
+									<div class="panel-footer text-center col-xs-12" ng-show="showDetails">
 										<div class="row" ng-bind-html="subThing.description">
 										</div>
 										<div ng-if="subThing.type=='TODO'" class="row-fluid">
@@ -97,12 +97,12 @@
 		<div ng-if="thing.type == 'FILE'" class="callout">
 			<div class="container">
 				<div class="row-fluid">
-					<div class="col-md-1 text-center pull-left">
+					<div class="col-xs-1 text-center pull-left">
 						{{ thing.created | date : 'd'}}<br />
 						{{ thing.created | date : 'MMMM'}}
 					</div>
 					
-					<div class="col-md-11 well well-lg" ng-switch="thing.fileType">
+					<div class="col-xs-11 well well-lg" ng-switch="thing.fileType">
 						<div class="pull-right">
 							<i class="fa fa-download"></i> Download | <i class="fa fa-trash-o"></i>
 						</div>
@@ -115,11 +115,11 @@
 							<i ng-switch-when="powerpoint" class="fa fa-file-powerpoint-o fa-border"></i>
 							{{ thing.name }} 
 						</h2>
-						<div ng-show="!showDetails" class="col-md-12">
+						<div ng-show="!showDetails" class="col-xs-12">
 							<p></p>
 							<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
 						</div>
-						<div ng-show="showDetails" class="col-md-12">
+						<div ng-show="showDetails" class="col-xs-12">
 							<p ng-bind-html="thing.description"></p>
 							<i class="fa fa-angle-up fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
 						</div>
@@ -133,24 +133,24 @@
 		<div class="blurb" id="sec4">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-xs-12">
 						<h1 class="text-center">This is what I have ToDo</h1>
-						<div class="col-md-8 col-md-offset-2">
-							<div ng-repeat="thing in activity.things | filter: {type: 'TODO', completed: false}" class="row">
+						<div class="col-xs-8 col-xs-offset-2">
+							<div ng-repeat="thing in data.currentActivity.things | filter: {type: 'TODO', completed: false}" class="row">
 								
-								<div class="col-md-12">
+								<div class="col-xs-12">
 									<h2 ng-click="thing.completed = !thing.completed"  style="cursor: pointer;">
 										<i class="fa fa-square-o"></i>
 										{{ thing.name }}
 									</h2>
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-xs-4">
 											<p>
 												Created: 
 												{{ thing.created | date : 'yyyy-MM-dd'}}
 											</p>
 										</div>
-										<div class="col-md-4">
+										<div class="col-xs-4">
 											<p>
 												Deadline: 
 												{{ thing.deadline | date : 'yyyy-MM-dd'}}
@@ -168,7 +168,7 @@
 										
 									</div>
 									<div class="row">
-										<div ng-show="!showDetails" class="col-md-12">
+										<div ng-show="!showDetails" class="col-xs-12">
 											<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
 										</div>
 										<div ng-show="showDetails" class="panel panel-default">
@@ -194,23 +194,23 @@
 	<div class="blurb" id="sec4">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-xs-12">
 					<h1 class="text-center">This is what I have done</h1>
-					<div class="col-md-8 col-md-offset-2">
-						<div ng-repeat="thing in activity.things | filter: {type: 'TODO', completed: true}" class="row">
-							<div class="col-md-12">
+					<div class="col-xs-8 col-xs-offset-2">
+						<div ng-repeat="thing in data.currentActivity.things | filter: {type: 'TODO', completed: true}" class="row">
+							<div class="col-xs-12">
 								<h2 ng-click="thing.completed = !thing.completed" style="cursor: pointer;">
 									<i class="fa fa-check-square-o"></i>
 									{{ thing.name }}
 								</h2>
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-xs-4">
 										<p>
 											Created: 
 											{{ thing.created | date : 'yyyy-MM-dd'}}
 										</p>
 									</div>
-									<div class="col-md-4">
+									<div class="col-xs-4">
 										<p>
 											Deadline: 
 											{{ thing.deadline | date : 'yyyy-MM-dd'}}
@@ -218,7 +218,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-xs-12">
 										<i class="fa fa-ellipsis-h fa-2x fa-border"></i>
 									</div>
 								</div>

@@ -1,27 +1,22 @@
 'use strict';
 
-app.controller('ActivityController', function($scope, $sce, $location, activityDataService, sharedDataService){
+app.controller('ActivityController', function($scope, $sce, $location, Data){
 	
 	function init(){
 		
-		var activity = $scope.activity = {};
+//		var activity = $scope.data.activity = {};
 		
-		if($.isEmptyObject(sharedDataService.currentActivity)){
-			activityDataService.getById('test')
-			.success(function(data){
-				$scope.activity = data;
-				
-				sharedDataService.setCurrentActivity($scope.activity);
-				
-			});	
+		if($.isEmptyObject(Data.currentActivity)){
+			$location.path('/');
+			return;
 		}
-		else{
-			$scope.activity = sharedDataService.currentActivity;
-		}
+		
+		$scope.data = Data;
+		
 	}
 	
 	$scope.editThing = function(thing){
-		var index = $scope.activity.things.indexOf(thing);
+		var index = $scope.data.activity.things.indexOf(thing);
 		
 		$location.path('/activity/edit/thing/' + index)
 		

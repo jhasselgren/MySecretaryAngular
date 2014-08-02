@@ -1,0 +1,88 @@
+	<div class="navbar navbar-fixed-top navbar-bold" data-spy="affix"
+		data-offset-top="1000">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Home</a> <a class="navbar-toggle"
+					data-toggle="collapse" data-target=".navbar-collapse"> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar">
+				<ul class="nav navbar-nav">
+					<li><a href="#sec1">Section 1</a></li>
+					<li><a href="#sec2">Section 2</a></li>
+					<li><a href="#sec3">Section 3</a></li>
+					<li><a href="#sec4">Section 4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="header vert">
+		<div class="container">
+			<h1>Choose activity</h1>
+			<p class="lead"></p>
+
+		<div>&nbsp;</div>
+			<a ng-click="create=true" class="btn btn-default btn-lg">Create new activity</a></div>
+	</div>
+	
+	<div ng-show="create">
+		<div class="blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1>New Activity</h1>
+						<div form-input type="text" label="Name:" model="newActivity.name"></div>
+						<div form-input type="text" label="Short description:" model="newActivity.shortDescription"></div>
+						<div form-textarea type="textarea" rows="5" label="Description:" model="newActivity.description"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class=col-xs-12>
+						<button class="btn btn-default" ng-click="createActivity(newActivity); create=false">Save</button>
+						<button class="btn btn-default" ng-click="cancelCreateActivity(newActivity); create=false">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<div id="sec1" class="blurb" ng-repeat="activity in data.allActivities">
+			<div class="container">
+				<div ng-hide="edit" class="row item">
+					<div class="col-xs-12 text-center pull-left">
+						<h1 ng-click="chooseActivity(activity)">{{ activity.name }}</h1>
+						<p class="lead">{{ activity.description }}</p>
+					</div>
+					<div class="menu">
+						<i class="fa fa-pencil" ng-click="edit=true"></i> | <i class="fa fa-trash-o" ng-click="deleteActivity(activity)"></i>
+					</div>
+				</div>
+				
+				<div ng-show="edit" class="row item">
+					<div class="row">
+						<div class="col-xs-12">
+							<div form-input type="text" label="Name:" model="activity.name"></div>
+							<div form-input type="text" label="Short description:" model="activity.shortDescription"></div>
+							<div form-textarea type="textarea" rows="5" label="Description:" model="activity.description"></div>
+						</div>
+					
+						<div class="menu">
+							<i class="fa fa-pencil" ng-click="edit=true"></i> | <i class="fa fa-trash-o" ng-click="deleteActivity(activity); edit=false"></i>
+						</div>
+					</div>
+					<div class="row">
+						<div class=col-xs-12>
+							<button class="btn btn-default" ng-click="updateActivity(activity); edit = false">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+	</div>
+	
+	

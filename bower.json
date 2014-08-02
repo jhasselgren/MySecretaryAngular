@@ -14,6 +14,6 @@
     "angular-bootstrap": ">=0",
     "angular-sanitize": ">=1",
     "textAngular": ">=1",
-    "angular-upload": ">=1"
+    "ng-flow": "#~2"
   }
 }

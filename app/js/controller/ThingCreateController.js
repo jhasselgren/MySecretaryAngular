@@ -1,14 +1,14 @@
 'use strict';
 
-app.controller('ThingController', function($scope, $sce, $routeParams, $location, $anchorScroll, activityDataService, Data){
+app.controller('ThingController', function($scope, $sce, $routeParams, $location, $anchorScroll, activityDataService, sharedDataService){
 	function init(){
 		
 		if($.isEmptyObject(sharedDataService.currentActivity)){
 			activityDataService.getById('test')
-			.success(function(msg){
-				$scope.data.activity = msg;
+			.success(function(data){
+				$scope.activity = data;
 				
-				Data.currentActivity($scope.activity);
+				sharedDataService.setCurrentActivity($scope.activity);
 				setup($routeParams.index)
 			});	
 		}
@@ -26,14 +26,14 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 	
 	function setup(index){
 		var thingIndex = $scope.index = index;
-		$scope.data.activity = Data.currentActivity;
+		$scope.activity = sharedDataService.currentActivity;
 		$scope.addSubThing = false;
-		$scope.data.thing = $scope.data.activity.things[thingIndex]
+		$scope.thing = $scope.activity.things[thingIndex]
 		$scope.oldThing = angular.copy($scope.thing)
 	}
 	
 	$scope.deleteSubThing = function(subThing){
-		var index = $scope.data.thing.things.indexOf(subThing);
+		var index = $scope.thing.things.indexOf(subThing);
 		
 		if(index > -1){
 			$scope.thing.things.splice(index, 1);
@@ -43,7 +43,7 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 	
 	$scope.cancel = function(){
 		
-		Data.currentActivity.things[$scope.index] = angular.copy($scope.oldThing)
+		sharedDataService.currentActivity.things[$scope.index] = angular.copy($scope.oldThing)
 		$location.path('/activity')
 	}
 	
@@ -77,11 +77,11 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 	}
 	
 	$scope.saveNewThing = function(){		
-		activityDataService.addSubThing($scope.data.activity.id, $scope.data.thing.id, $scope.newThing)
-			.success(function(msg){
-				$scope.activity = msg;
-				Data.currentActivity = $scope.activity;
-				$scope.data.thing = $scope.data.activity.things[$scope.index]
+		activityDataService.addSubThing($scope.activity.id, $scope.thing.id, $scope.newThing)
+			.success(function(data){
+				$scope.activity = data;
+				sharedDataService.setCurrentActivity($scope.activity);
+				$scope.thing = $scope.activity.things[$scope.index]
 			});
 		
 		$scope.newThing = {};

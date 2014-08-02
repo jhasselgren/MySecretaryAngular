@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h1>Add thing:</h1>
+		<div class="form-group">
+			<label>Type</label>
+			<select class="form-control" ng-model="newThing.type">
+				<option value="">Choose type..</option>
+				<option value="TODO">ToDo</option>
+				<option value="FILE">File</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-xs-12" ng-show="newThing.type == 'TODO'">
+		<div class="form-group">
+			<label>Title</label>
+			<input class="form-control" ng-model="newThing.name">
+		</div>
+		<div class="form-group">
+			<label>Description</label>
+			<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+		</div>
+		<div class="form-group">
+			<label>Deadline</label>
+			<input type="date" id="exampleInput" name="input" placeholder="yyyy-MM-dd" class="form-control" ng-model="newThing.deadline">
+		</div>
+	</div>
+	<div class="col-xs-12" ng-show="newThing.type == 'FILE'">
+		<div class="form-group">
+			<label>Description</label>
+			<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+		</div>
+
+        <div flow-init="setParmForUpload()" flow-files-submitted="$flow.upload()" flow-file-success="fileUploaded($file, $message)" flow-file-added="fileAdded($event, $file)">
+        	<div flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style" class="alert alert-info">
+        		<p><span class="btn btn-primary" flow-btn><i class="fa fa-upload"></i> Upload File</span> OR drag and drop</p>
+        	</div>
+        </div>
+        
+        
+        
+        
+	</div>
+	<div class="col-xs-12">
+		<button class="btn btn-default btn-sm" ng-click="cancelCreateNewSubThing()">Cancel</button>
+		<button class="btn btn-default btn-sm" ng-show="newThing.type" ng-click="saveNewThing()">Save</button>
+	</div>
+</div>
+
