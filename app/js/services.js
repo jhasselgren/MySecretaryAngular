@@ -3,15 +3,48 @@
 /* Services */
 app.value('version', '0.1');
 
-app.value("backEndAdress","http://192.168.50.5:8080");
+app.value("backEndAdress","http://localhost:8080");
 
-app.factory("Data", function() {
+app.factory("Data", function($rootScope, activityDataService) {
 	
-	this.currentActivity = {};
-	this.currentThing = {},
-	this.allActivities = {}
+	var service = {
+			currentActivity: {},
+			currentThing: {},
+			allActivities: {},
+			
+			setCurrentActivity: function (activity){
+				this.currentActivity = activity;
+				
+				$rootScope.$broadcast('currentActivity.updated')
+			},
+			
+			addThing: function(thing){
+				this.currentActivity.things.push(thing);
+			},
+			
+			saveActivity: function(){
+				return activityDataService.update(this.currentActivity);
+			},
+			
+			setCurrentThing: function (thing){
+				this.currentThing = thing;
+				
+				$rootScope.$broadcast('currentThing.updated')
+			},
+			
+			addSubThing: function(subthing){
+				this.currentThing.thins.push(subthing);
+				$rootScope.$broadcast('currentThing.updated')
+			},
+			
+			setAllActivities: function (activitiesList){
+				this.allActivities = activitiesList;
+				
+				$rootScope.$broadcast('allActivities.updated')
+			}
+	}
 	
-	return this;
+	return service;
 	
 //	sharedDataService.currentActivity = {};
 //	sharedDataService.currentThing = {};

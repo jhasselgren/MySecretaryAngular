@@ -45,47 +45,78 @@ app.directive("formTextarea", function () {
     };
 });
 
-app.directive("thing",function() {
+app.directive("thing",function($timeout, Data) {
 	
 	return {
 		restrict: 'E',
 		scope: {
 			showcreate: '&',
 			showedit: '&',
-			cancel: '&'
+			completed: '&',
+			hide: '&'
 				
 		},
 		templateUrl: 'views/thing_create.html',
-		controller: function($scope){
+		link: function(scope, element, attrs){
 			
-			$scope.newThing = {};
+			scope.newThing = {};
+			scope.fileId = generateUIDNotMoreThan1million();
 			
-			
-			this.createThing = function(newThing){
-				console.log("create thing:" + newThing);
-			};
-			
-			this.createSubThing = function(newThing){
-				console.log("create subthing:" + newThing);
-			};
-			
-			this.editThing = function(newThing){
-				console.log("edit thing: " + newThing);
-			};
-			
-			
-		}
-	}
-	
-});
-
-app.directive("save",function(){
-	return {
-		require: "thing",
-		link: function(scope, element, attrs, thingCtrl){
-			scope.save = function(newThing){
-				thingCtrl.createThing(newThing);
+			function generateUIDNotMoreThan1million() {
+			    return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
 			}
+			
+			scope.setParmForUpload = function(){
+				return {target: 'http://localhost:8080/file/upload', singleFile:true, testChunks:false, query:{fileName: scope.fileId}};
+			}
+			
+			scope.fileAdded =  function (event, file, $flow) {
+				file.flowObj.opts.query.fileName = scope.fileId
+			};
+			
+			scope.fileUploaded = function($file, $message){
+				scope.newThing.fileId = scope.fileId;
+				scope.newThing.name = $file.name;
+				scope.newThing.fileType = $file.file.type;
+				
+				scope.createThing(scope.newThing);
+			}
+			
+			scope.createThing = function(newThing){
+				var thing = angular.copy(newThing);
+				
+				Data.addThing(thing);
+				
+				Data.saveActivity()
+				.success(function(data){
+					Data.setCurrentActivity(data);
+					scope.completed();
+					scope.newThing = {};
+				});
+			};
+			
+			
+			 
+			scope.cancel = function(){
+				scope.newThing = {};
+				scope.hide();
+			};
+			
+			scope.toggleMin = function() {
+				scope.minDate = scope.minDate ? null : new Date();
+			};
+			 
+			scope.toggleMin();
+			
+			scope.createSubThing = function(newThing){
+				console.log("create subthing:");
+				console.log(newThing);
+			};
+			
+			scope.editThing = function(newThing){
+				console.log("edit thing: ");
+				console.log(newThing);
+			};
 		}
 	}
 });

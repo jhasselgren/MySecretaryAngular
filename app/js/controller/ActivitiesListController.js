@@ -11,9 +11,11 @@ var activitiesListController = app.controller('ActivitiesListController', functi
 	
 	function init(){
 		$scope.data = Data;
-		
-		
 	};
+	
+	$scope.$on('allActivities.updated', function(event){
+		$scope.data.allActivities = Data.allActivities;
+	});
 	
 	$scope.gotoElement = function (eID){
       // set the location.hash to the id of
@@ -74,7 +76,7 @@ activitiesListController.loadData = function($q, activityDataService, Data)
 	activityDataService.getAll()
 		.success(function(msg, status)
 		{
-			Data.allActivities = msg;
+			Data.setAllActivities(msg);
 			defer.resolve(status);
 		})
 		.error(function(msg, status){

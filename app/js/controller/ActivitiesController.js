@@ -15,6 +15,12 @@ app.controller('ActivityController', function($scope, $sce, $location, Data){
 		
 	}
 	
+	$scope.$on('currentActivity.updated', function(event){
+		console.log(event);
+		$scope.data = Data;
+		console.log($scope.data);
+	});
+	
 	$scope.editThing = function(thing){
 		var index = $scope.data.activity.things.indexOf(thing);
 		
@@ -35,8 +41,14 @@ app.controller('ActivityController', function($scope, $sce, $location, Data){
 		$scope.editThing = true;
 	};
 	
+	$scope.createThingCompleted = function(){
+		$scope.createThing = false;
+		$scope.editThing = false;
+	}
+	
 	$scope.cancelCreateThing = function(){
-		console.log('cancelCreateThing');
+		$scope.createThing = false;
+		$scope.editThing = false;
 	};
 	
 	$scope.shouldShowCreateThing = function(){

@@ -18,14 +18,19 @@
 				<div class="form-group">
 					<label>Title</label>
 					<input class="form-control" ng-model="newThing.name">
+					<input type="hidden" ng-model="newThing.completed" value="false">
 				</div>
 				<div class="form-group">
 					<label>Description</label>
 					<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
 				</div>
 				<div class="form-group">
-					<label>Deadline</label>
-					<input type="date" id="exampleInput" name="input" placeholder="yyyy-MM-dd" class="form-control" ng-model="newThing.deadline">
+					<p><label>Deadline</label></p>
+					<div style="display:inline-block; min-height:290px;">
+				        <datepicker ng-model="newThing.deadline" starting-day="1" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+				    </div>
+					
+					
 				</div>
 			</div>
 			<div class="col-xs-12" ng-show="newThing.type == 'FILE'">
@@ -42,7 +47,7 @@
 			</div>
 			<div class="col-xs-12">
 				<button class="btn btn-default btn-sm" ng-click="cancel()">Cancel</button>
-				<button class="btn btn-default btn-sm" ng-show="newThing.type" ng-click="save(newThing)">Save</button>
+				<button class="btn btn-default btn-sm" ng-show="newThing.type" ng-click="createThing(newThing)">Save</button>
 			</div>
 		</div>
 	</div>
