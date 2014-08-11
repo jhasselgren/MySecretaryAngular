@@ -42,6 +42,7 @@
 		</div>
 	</div>
 	<div ng-repeat="thing in data.currentActivity.things | filter: {type: '!TODO'} ">
+		<thing-file ng-if="thing.type == 'FILE'" thing="thing" ></thing-file>
 		<div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
 			<div class="container">
 				<div class="row-fluid">
@@ -96,39 +97,7 @@
 				</div>
 			</div>
 		</div>
-		<div ng-if="thing.type == 'FILE'" class="callout">
-			<div class="container">
-				<div class="row-fluid">
-					<div class="col-xs-1 text-center pull-left">
-						{{ thing.created | date : 'd'}}<br />
-						{{ thing.created | date : 'MMMM'}}
-					</div>
-					
-					<div class="col-xs-11 well well-lg" ng-switch="thing.fileType">
-						<div class="pull-right">
-							<i class="fa fa-download"></i> Download | <i class="fa fa-trash-o"></i>
-						</div>
-						<h2>
-							<i ng-switch-default class="fa fa-file-o  fa-border"></i>
-							<i ng-switch-when="zip" class="fa fa-file-archive-o fa-border"></i>
-							<i ng-switch-when="excel" class="fa fa-file-excel-o fa-border"></i>
-							<i ng-switch-when="pdf" class="fa fa-file-pdf-o fa-border"></i>
-							<i ng-switch-when="word" class="fa fa-file-word-o fa-border"></i>
-							<i ng-switch-when="powerpoint" class="fa fa-file-powerpoint-o fa-border"></i>
-							{{ thing.name }} 
-						</h2>
-						<div ng-show="!showDetails" class="col-xs-12">
-							<p></p>
-							<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
-						</div>
-						<div ng-show="showDetails" class="col-xs-12">
-							<p ng-bind-html="thing.description"></p>
-							<i class="fa fa-angle-up fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 	
 	

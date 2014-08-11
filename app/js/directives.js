@@ -45,7 +45,7 @@ app.directive("formTextarea", function () {
     };
 });
 
-app.directive("thing",function($timeout, Data) {
+app.directive("thing",function(Data, backEndAdress) {
 	
 	return {
 		restrict: 'E',
@@ -67,7 +67,7 @@ app.directive("thing",function($timeout, Data) {
 			}
 			
 			scope.setParmForUpload = function(){
-				return {target: 'http://localhost:8080/file/upload', singleFile:true, testChunks:false, query:{fileName: scope.fileId}};
+				return {target: backEndAdress+'/file/upload', singleFile:true, testChunks:false, query:{fileName: scope.fileId}};
 			}
 			
 			scope.fileAdded =  function (event, file, $flow) {
@@ -95,8 +95,6 @@ app.directive("thing",function($timeout, Data) {
 				});
 			};
 			
-			
-			 
 			scope.cancel = function(){
 				scope.newThing = {};
 				scope.hide();
@@ -116,6 +114,53 @@ app.directive("thing",function($timeout, Data) {
 			scope.editThing = function(newThing){
 				console.log("edit thing: ");
 				console.log(newThing);
+			};
+		}
+	}
+});
+
+app.directive("thingFile",function(Data, backEndAdress, activityDataService){
+	return{
+		restrict: "E",
+		scope: {
+			thing : "=",
+		},
+		templateUrl: "views/directive/thing_file.html",
+		link: function(scope, element, attrs){
+			
+			scope.controll = {edit: false};
+			
+			scope.filePath = function(fileId){
+				
+				var activityId = Data.currentActivity.id;
+				return backEndAdress + '/file/download/'+activityId+'/'+fileId;
+			};
+			
+			scope.changeEdit = function(){
+				scope.controll.edit = !scope.controll.edit
+			};
+			
+			scope.editMode = function(){
+				return scope.controll.edit;
+			};
+			
+			scope.save = function(){
+				Data.saveActivity().success(function(data){
+					scope.controll.edit = false;
+				});
+			};
+			
+			scope.deleteThing = function(thing){
+				
+				var activityId = Data.currentActivity.id;
+				
+				activityDataService.deleteThing(activityId,thing).success(function(data){
+					Data.setCurrentActivity(data);
+				});
+			}
+			
+			scope.cancel = function(){
+				scope.controll.edit = false;
 			};
 		}
 	}

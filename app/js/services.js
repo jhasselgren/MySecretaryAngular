@@ -93,6 +93,10 @@ app.factory('activityDataService', function($http, backEndAdress){
 		return $http.post(backEndAdress+ '/activity/'+activityId+'/'+thingId, subThing);
 	};
 	
+	activityDataService.deleteThing = function(activityId, thing){
+		return $http.put(backEndAdress+ '/activity/'+activityId+'/delete/thing', thing)
+	};
+	
 	return activityDataService;
 });
 
