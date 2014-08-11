@@ -22,5 +22,30 @@ app.controller('ActivityController', function($scope, $sce, $location, Data){
 		
 	};
 	
+	$scope.createThing = false;
+	$scope.editThing = false;
+	
+	$scope.startCreateThing = function(){
+		$scope.createThing = true;
+		$scope.editThing = false;
+	};
+	
+	$scope.startEditThing = function(){
+		$scope.createThing = false;
+		$scope.editThing = true;
+	};
+	
+	$scope.cancelCreateThing = function(){
+		console.log('cancelCreateThing');
+	};
+	
+	$scope.shouldShowCreateThing = function(){
+		return $scope.createThing && !$scope.editThing;
+	};
+	
+	$scope.shouldShowEditThing = function(){
+		return !$scope.createThing && $scope.editThing;
+	};
+	
 	init();
 });

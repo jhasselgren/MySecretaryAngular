@@ -170,7 +170,6 @@ footer {
 }
 .ta-editor {
   min-height: auto !important;
-  height: auto !important;
   overflow: auto;
   font-family: inherit;
   font-size: 100%;

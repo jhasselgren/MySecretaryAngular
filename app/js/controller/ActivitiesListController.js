@@ -11,7 +11,19 @@ var activitiesListController = app.controller('ActivitiesListController', functi
 	
 	function init(){
 		$scope.data = Data;
+		
+		
 	};
+	
+	$scope.gotoElement = function (eID){
+      // set the location.hash to the id of
+      // the element you wish to scroll to.
+      $location.hash(eID);
+ 
+      // call $anchorScroll()
+      anchorSmoothScroll.scrollTo(eID);
+      
+    };
 	
 	$scope.chooseActivity = function(activity){
 		$scope.data.currentActivity = activity;

@@ -20,6 +20,16 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 		
 	}
 	
+	$scope.gotoElement = function (eID){
+      // set the location.hash to the id of
+      // the element you wish to scroll to.
+      $location.hash(eID);
+ 
+      // call $anchorScroll()
+      anchorSmoothScroll.scrollTo(eID);
+      
+    };
+	
 	function generateUIDNotMoreThan1million() {
 	    return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
 	}

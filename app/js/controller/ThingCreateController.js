@@ -15,9 +15,6 @@ app.controller('ThingController', function($scope, $sce, $routeParams, $location
 		else{
 			setup($routeParams.index)
 		}
-		
-		
-		
 	}
 	
 	function generateUIDNotMoreThan1million() {
