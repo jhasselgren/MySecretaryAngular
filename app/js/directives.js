@@ -167,7 +167,7 @@ app.directive("thing", function(Data, backEndAdress, activityDataService){
 		scope: {
 			thing: "="
 		},
-		controller: function($scope){
+		controller: function($rootScope, $scope){
 			
 			this.activityId = Data.currentActivity.id;
 			this.backEndAdress = backEndAdress;
