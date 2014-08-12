@@ -13,12 +13,12 @@ app.directive('appVersion', ['version', function(version) {
 
 app.directive("formInput", function () {
     return {
+    	restrict: "E",
     	scope: {
     		type: "@",
     		label: "@",
     		model: "="
     	},
-    	
     	template: 
     		'<div class="form-group">\
 				<label>{{label}}</label>\
@@ -45,18 +45,17 @@ app.directive("formTextarea", function () {
     };
 });
 
-app.directive("thing",function(Data, backEndAdress) {
+app.directive("thingCreate",function(Data, backEndAdress) {
 	
 	return {
 		restrict: 'E',
 		scope: {
 			showcreate: '&',
-			showedit: '&',
 			completed: '&',
 			hide: '&'
 				
 		},
-		templateUrl: 'views/thing_create.html',
+		templateUrl: 'views/directive/thing_create.html',
 		link: function(scope, element, attrs){
 			
 			scope.newThing = {};
@@ -115,25 +114,97 @@ app.directive("thing",function(Data, backEndAdress) {
 				console.log("edit thing: ");
 				console.log(newThing);
 			};
+			
+			
+			/*
+			 * 
+			 * Hantering av subThings
+			 * 
+			 */
+			
+			scope.addSubFile = false;
+			scope.addSubToDo = false;
+			
+			scope.prepAddingNewSubthingFile = function(){
+				
+				scope.addSubFile = true;
+				scope.addSubToDo = false;
+				
+				if(scope.newThing.things == undefined){
+					scope.newThing.things = [];
+				}
+				
+				scope.newSubthing = 
+					{ 
+						fileId: generateUIDNotMoreThan1million(), 
+						type: "FILE",
+						
+					};
+			};
+			
+			scope.setParmForSubThingFileUpload = function(){
+				return {target: backEndAdress+'/file/upload', singleFile:true, testChunks:false};
+			}
+			
+			scope.subThingFileAdded =  function (event, file, $flow) {
+				file.flowObj.opts.query.fileName = scope.newSubthing.fileId;
+			};
+			
+			scope.subThingFileUploaded = function($file, $message){
+				scope.newSubthing.name = $file.name;
+				scope.newSubthing.fileType = $file.file.type;
+				
+				var subthing = angular.copy(scope.newSubthing);
+				
+				scope.newThing.things.push(subthing);
+			};
 		}
 	}
 });
 
-app.directive("thingFile",function(Data, backEndAdress, activityDataService){
+app.directive("thing", function(Data, backEndAdress, activityDataService){
 	return{
-		restrict: "E",
 		scope: {
-			thing : "=",
+			thing: "="
 		},
+		controller: function($scope){
+			
+			this.activityId = Data.currentActivity.id;
+			this.backEndAdress = backEndAdress;
+			
+			this.save = function(){
+				return Data.saveActivity();
+			};
+			
+			this.deleteThing = function(thing){
+				
+				var activityId = Data.currentActivity.id;
+				
+				activityDataService.deleteThing(activityId,thing).success(function(data){
+					Data.setCurrentActivity(data);
+				});
+			}
+		}
+	}
+});
+
+app.directive("file",function(){
+	return{
+		restrict: "A",
+		require: "thing",		
 		templateUrl: "views/directive/thing_file.html",
-		link: function(scope, element, attrs){
+		link: function(scope, element, attrs, thingController){
 			
 			scope.controll = {edit: false};
 			
 			scope.filePath = function(fileId){
+				var activityId = thingController.activityId;
+				var backEndAdress = thingController.backEndAdress;
+				if(fileId && activityId){
+					return backEndAdress + '/file/download/'+activityId+'/'+fileId;
+				}
 				
-				var activityId = Data.currentActivity.id;
-				return backEndAdress + '/file/download/'+activityId+'/'+fileId;
+				return "";
 			};
 			
 			scope.changeEdit = function(){
@@ -145,18 +216,13 @@ app.directive("thingFile",function(Data, backEndAdress, activityDataService){
 			};
 			
 			scope.save = function(){
-				Data.saveActivity().success(function(data){
+				thingController.save().success(function(data){
 					scope.controll.edit = false;
 				});
-			};
+			}
 			
 			scope.deleteThing = function(thing){
-				
-				var activityId = Data.currentActivity.id;
-				
-				activityDataService.deleteThing(activityId,thing).success(function(data){
-					Data.setCurrentActivity(data);
-				});
+				thingController.deleteThing(thing);
 			}
 			
 			scope.cancel = function(){
@@ -165,3 +231,13 @@ app.directive("thingFile",function(Data, backEndAdress, activityDataService){
 		}
 	}
 });
+
+app.directive("text", function(){
+	return{
+		restrict: "A",
+		require: "thing",		
+		templateUrl: "views/directive/thing_text.html",
+	}
+});
+
+//app.directive("thingText",directiveFactory)

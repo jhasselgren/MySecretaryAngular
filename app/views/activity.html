@@ -2,19 +2,9 @@
 		data-offset-top="1000">
 		<div class="container">
 			<div class="navbar-header">
-				<a href="#" class="navbar-brand">Home</a> <a class="navbar-toggle"
-					data-toggle="collapse" data-target=".navbar-collapse"> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-				</a>
-			</div>
-			<div class="navbar-collapse collapse" id="navbar">
-				<ul class="nav navbar-nav">
-					<li><a href="#sec1">Section 1</a></li>
-					<li><a href="#sec2">Section 2</a></li>
-					<li><a href="#sec3">Section 3</a></li>
-					<li><a href="#sec4">Section 4</a></li>
-				</ul>
+				<a href="#" class="navbar-brand">Home</a>
+				<a href class="navbar-brand" ng-click="startCreateThing()">Create new thing</a>
+				<a href class="navbar-brand" ng-show="modified">Save</a>
 			</div>
 		</div>
 	</div>
@@ -22,81 +12,35 @@
 	<div class="header vert">
 		<div class="container">
 			<h1>{{ data.currentActivity.name }}</h1>
-			<p class="lead">{{ data.currentActivity.shortDescription }}</p>
+			<p class="lead" ng-click="editShortDescr = !editShortDescr" ng-show="!editShortDescr">{{ data.currentActivity.shortDescription }}</p>
+			<p class="lead" ng-show="editShortDescr">
+				<input class="form-control" ng-blur="editShortDescr = false" ng-model="data.currentActivity.shortDescription">
+			</p>
 			<div>&nbsp;</div>
 			<a ng-click="startCreateThing()" class="btn btn-default btn-lg">Create new thing</a>
 		</div>
 	</div>
 	
-	<thing showcreate="shouldShowCreateThing()" showedit="shouldShowEditThing()" hide="cancelCreateThing()" completed="createThingCompleted()"></thing>
+	<thing-create showcreate="shouldShowCreateThing()" hide="cancelCreateThing()" completed="createThingCompleted()"></thing-create>
 	
 	<div id="sec1" class="blurb">
 		<div class="container">
 			<div class="row">
-
 				<div class="col-xs-12 text-center">
-					<h1>Overview</h1>
-					<p class="lead">{{ data.currentActivity.description }}</p>
+					<h1 ng-click="editOverview = !editOverview">Overview</h1>
+					<p class="lead" ng-click="editOverview = !editOverview" ng-show="!editOverview">{{ data.currentActivity.description }}</p>
+					<p class="lead" ng-show="editOverview">
+						<input class="form-control" ng-blur="editOverview=false" ng-model="data.currentActivity.description">
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div ng-repeat="thing in data.currentActivity.things | filter: {type: '!TODO'} ">
-		<thing-file ng-if="thing.type == 'FILE'" thing="thing" ></thing-file>
-		<div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
-			<div class="container">
-				<div class="row-fluid">
-					<div class="pull-right">
-				 		<span ng-click="editThing(thing)" style="cursor: pointer;"><i class="fa fa-pencil"></i></span> | <i class="fa fa-trash-o"></i>
-					</div>
-					<div class="col-xs-1 text-center pull-left">
-						{{ thing.created | date : 'd'}}<br />
-						{{ thing.created | date : 'MMMM'}}
-					</div>
-					<div class="col-xs-11">
-						<div class="row">
-							<div class="col-xs-12">
-								<h1>{{ thing.name }}</h1>
-								<span ng-bind-html="thing.text"></span>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-3" ng-repeat="subThing in thing.things">
-								<div class="panel panel-default" >
-									<div class="panel-heading text-center" ng-click="showDetails = ! showDetails" style="cursor: pointer;">
-										<p>
-											<b>{{ subThing.name }}</b>
-										</p>
-									</div>
-									<div class="panel-body text-center">
-										<p ng-switch="subThing.type">
-											<span ng-switch-when="TODO" style="cursor: pointer;" ng-click="subThing.completed = ! subThing.completed">
-												<i ng-if="!subThing.completed" class="fa fa-square-o  fa-3x"></i>
-												<i ng-if="subThing.completed" class="fa fa-check-square-o fa-3x"></i>
-											</span>
-											<span ng-switch-when="FILE"><i class="fa fa-file-pdf-o fa-3x"></i></span>
-										</p>
-									</div>
-									<div class="panel-footer text-center col-xs-12" ng-show="showDetails">
-										<div class="row" ng-bind-html="subThing.description">
-										</div>
-										<div ng-if="subThing.type=='TODO'" class="row-fluid">
-											<div ng-click="subThing.progress =  subThing.progress-10" class="pull-left" style="margin-right: 5px; cursor: pointer;">
-												<i class="fa fa-chevron-left"></i>
-											</div>
-											<div ng-click="subThing.progress =  subThing.progress+10" class="pull-right" style="margin-left: 5px; cursor: pointer;">
-												<i class="fa fa-chevron-right"></i>
-											</div>
-											<progressbar class="progress-striped active" value="subThing.progress"></progressbar>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<thing file ng-if="thing.type == 'FILE'" thing="thing" ></thing>
+		
+		<thing text ng-if="thing.type == 'TEXT'" thing="thing"></thing>
 		
 	</div>
 	

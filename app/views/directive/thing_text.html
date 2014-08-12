@@ -1,0 +1,54 @@
+<div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
+	<div class="container">
+		<div class="row">
+			<div class="pull-right">
+		 		<a href ng-click="editThing(thing)"><i class="fa fa-pencil"></i></a> | <a href><i class="fa fa-trash-o"></i></a>
+			</div>
+			<div class="col-xs-1 text-center pull-left">
+				{{ thing.created | date : 'd'}}<br />
+				{{ thing.created | date : 'MMMM'}}
+			</div>
+			<div class="col-xs-11">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1>{{ thing.name }}</h1>
+						<span ng-bind-html="thing.text"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3" ng-repeat="subThing in thing.things">
+						<div class="panel panel-default" >
+							<div class="panel-heading text-center" ng-click="showDetails = ! showDetails" style="cursor: pointer;">
+								<p>
+									<b>{{ subThing.name }}</b>
+								</p>
+							</div>
+							<div class="panel-body text-center">
+								<p ng-switch="subThing.type">
+									<span ng-switch-when="TODO" style="cursor: pointer;" ng-click="subThing.completed = ! subThing.completed">
+										<i ng-if="!subThing.completed" class="fa fa-square-o  fa-3x"></i>
+										<i ng-if="subThing.completed" class="fa fa-check-square-o fa-3x"></i>
+									</span>
+									<span ng-switch-when="FILE"><i class="fa fa-file-pdf-o fa-3x"></i></span>
+								</p>
+							</div>
+							<div class="panel-footer text-center col-xs-12" ng-show="showDetails">
+								<div class="row" ng-bind-html="subThing.description">
+								</div>
+								<div ng-if="subThing.type=='TODO'" class="row-fluid">
+									<div ng-click="subThing.progress =  subThing.progress-10" class="pull-left" style="margin-right: 5px; cursor: pointer;">
+										<i class="fa fa-chevron-left"></i>
+									</div>
+									<div ng-click="subThing.progress =  subThing.progress+10" class="pull-right" style="margin-left: 5px; cursor: pointer;">
+										<i class="fa fa-chevron-right"></i>
+									</div>
+									<progressbar class="progress-striped active" value="subThing.progress"></progressbar>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

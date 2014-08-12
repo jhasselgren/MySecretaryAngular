@@ -1,4 +1,4 @@
-<div ng-if="thing.type == 'FILE'" class="callout">
+<div class="callout">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-1 text-center pull-left">
@@ -8,7 +8,7 @@
 			
 			<div class="col-xs-11 well well-lg" ng-switch="thing.fileType">
 				<div class="pull-right">
-					<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
+					<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a href ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
 				</div>
 				<div ng-if="!editMode()">
 					<h2>

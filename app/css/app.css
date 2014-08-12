@@ -106,8 +106,16 @@ h1 {
 }
 .featurette {
   background: #545455;
-  padding: 50px 0;
+  padding-top: 2%;
+  padding-bottom: 3%;
   color: #ffffff;
+}
+.featurette a {
+  color: #ffffff;
+}
+.featurette a:hover {
+  color: #60dce6;
+  text-decoration: underline;
 }
 .featurette .panel {
   margin-top: 10px;

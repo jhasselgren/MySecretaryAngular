@@ -23,6 +23,8 @@ app.factory("Data", function($rootScope, activityDataService) {
 			},
 			
 			saveActivity: function(){
+				console.log("Save current activity:");
+				console.log(this.currentActivity);
 				return activityDataService.update(this.currentActivity);
 			},
 			
