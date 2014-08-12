@@ -1,8 +1,8 @@
 <div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
 	<div class="container">
-		<div class="row">
-			<div class="pull-right">
-		 		<a href ng-click="editThing(thing)"><i class="fa fa-pencil"></i></a> | <a href><i class="fa fa-trash-o"></i></a>
+		<div ng-show="!editMode()" class="row">
+			<div  class="pull-right">
+		 		<a href ng-click="changeEdit()"><i class="fa fa-pencil"></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
 			</div>
 			<div class="col-xs-1 text-center pull-left">
 				{{ thing.created | date : 'd'}}<br />
@@ -29,7 +29,7 @@
 										<i ng-if="!subThing.completed" class="fa fa-square-o  fa-3x"></i>
 										<i ng-if="subThing.completed" class="fa fa-check-square-o fa-3x"></i>
 									</span>
-									<span ng-switch-when="FILE"><i class="fa fa-file-pdf-o fa-3x"></i></span>
+									<span ng-switch-when="FILE"><a target="_self" ng-href="{{filePath(subThing.fileId)}}" download="subThing.name"><i class="fa fa-file-pdf-o fa-3x"></i></a></span>
 								</p>
 							</div>
 							<div class="panel-footer text-center col-xs-12" ng-show="showDetails">
@@ -47,6 +47,39 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="editMode()" class="row panel panel-default">
+			<div class="panel-body">
+				
+				<h1>Edit thing</h1>
+				<form-input type="text" label="Name" model="thing.name"></form-input>
+				
+				<div class="form-group">
+					<text-angular ng-model="thing.text" ta-toolbar="[['h1','h2','h3','h4','p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-sm btn-info">Add thing</button>
+				</div>
+			</div>
+			<div ng-show="(thing.things | filter: {type: 'FILE'}).length > 0" class="panel-footer">
+				<h3>Files</h3>
+				<div ng-repeat="subthing in filteredThings = (thing.things | filter: {type: 'FILE'})">
+					<h4>{{subthing.name}}</h4>
+					<p ng-bind-html="subthing.description"></p>
+				</div>
+			</div>
+			<div ng-show="(thing.things | filter: {type: 'TODO'}).length > 0" class="panel-footer">
+				<h3>ToDo</h3>
+				<div ng-repeat="subthing in filteredThings = (thing.things | filter: {type: 'TODO'})">
+					TODO
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+					<button type="button" class="btn btn-default" ng-click="save()">Save</button>
 				</div>
 			</div>
 		</div>

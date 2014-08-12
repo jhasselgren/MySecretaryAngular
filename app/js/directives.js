@@ -237,6 +237,46 @@ app.directive("text", function(){
 		restrict: "A",
 		require: "thing",		
 		templateUrl: "views/directive/thing_text.html",
+		link: function(scope, element, attrs, thingController){
+			
+			scope.controll = {edit: false};
+			
+			scope.deleteThing = function(thing){
+				thingController.deleteThing(thing);
+			}
+			
+			scope.changeEdit = function(){
+				scope.controll.edit = !scope.controll.edit
+			};
+			
+			scope.editMode = function(){
+				return scope.controll.edit;
+			};
+			
+			scope.save = function(){
+				thingController.save().success(function(data){
+					scope.controll.edit = false;
+				});
+			}
+			
+			scope.deleteThing = function(thing){
+				thingController.deleteThing(thing);
+			}
+			
+			scope.cancel = function(){
+				scope.controll.edit = false;
+			};
+			
+			scope.filePath = function(fileId){
+				var activityId = thingController.activityId;
+				var backEndAdress = thingController.backEndAdress;
+				if(fileId && activityId){
+					return backEndAdress + '/file/download/'+activityId+'/'+fileId;
+				}
+				
+				return "";
+			};
+		}
 	}
 });
 

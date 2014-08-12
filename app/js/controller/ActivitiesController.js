@@ -10,6 +10,12 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 		
 		$scope.modified = false;
 		
+		$scope.save = function(){
+			Data.saveActivity().success(function(){
+				$scope.modified = false;
+			});
+		}
+		
 		if($.isEmptyObject(Data.currentActivity)){
 			$location.path('/');
 			return;
@@ -49,12 +55,11 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 				console.log("data.currentActivity.description changed");
 				$scope.modified = true;
 				console.log("modified = true");
-			},5000);
+			},1000);
 		};
 	});
 	
 	$scope.$watch('data.currentActivity.shortDescription', function(newVal, oldVal){
-		
 		if(newVal != oldVal){
 			if(timeout){
 				$timeout.cancel(timeout);
@@ -64,7 +69,7 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 				console.log("data.currentActivity.shortDescription changed");
 				$scope.modified = true;
 				console.log("modified = true");
-			},5000);
+			},1000);
 		};
 	});
 	
@@ -76,7 +81,6 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 	
 	$scope.editThing = function(thing){
 		var index = $scope.data.activity.things.indexOf(thing);
-		
 		$location.path('/activity/edit/thing/' + index)
 		
 	};
@@ -97,7 +101,7 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 	$scope.createThingCompleted = function(){
 		$scope.createThing = false;
 		$scope.editThing = false;
-	}
+	};
 	
 	$scope.cancelCreateThing = function(){
 		$scope.createThing = false;
