@@ -124,6 +124,13 @@ h1 {
 .featurette .panel-footer {
   color: #333;
 }
+.featurette .panel-footer a {
+  color: #333;
+}
+.featurette .panel-footer a:hover {
+  color: #60dce6;
+  text-decoration: underline;
+}
 .featurette-item {
   margin-bottom: 15px;
 }

@@ -39,7 +39,7 @@
 	</div>
 	
 	<div ng-repeat="thing in data.currentActivity.things | filter: {type: '!TODO'} ">
-		<thing file ng-if="thing.type == 'FILE'" thing="thing" ></thing>
+		<thing file ng-if="thing.type == 'FILE'" thing="thing" useclass="callout"></thing>
 		
 		<thing text ng-if="thing.type == 'TEXT'" thing="thing"></thing>
 		

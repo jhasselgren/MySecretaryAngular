@@ -59,6 +59,7 @@ app.directive("thingCreate",function(Data, backEndAdress) {
 		link: function(scope, element, attrs){
 			
 			scope.newThing = {};
+			
 			scope.fileId = generateUIDNotMoreThan1million();
 			
 			function generateUIDNotMoreThan1million() {
@@ -165,12 +166,14 @@ app.directive("thingCreate",function(Data, backEndAdress) {
 app.directive("thing", function(Data, backEndAdress, activityDataService){
 	return{
 		scope: {
-			thing: "="
+			thing: "=",
+			useclass: "@", 
 		},
 		controller: function($rootScope, $scope){
 			
 			this.activityId = Data.currentActivity.id;
 			this.backEndAdress = backEndAdress;
+			this.useclass = ($scope.useclass) ? $scope.useclass : "";
 			
 			this.save = function(){
 				return Data.saveActivity();
@@ -193,9 +196,17 @@ app.directive("file",function(){
 		restrict: "A",
 		require: "thing",		
 		templateUrl: "views/directive/thing_file.html",
+		transclude: true,
 		link: function(scope, element, attrs, thingController){
 			
+			
+			
+			
+			
 			scope.controll = {edit: false};
+			
+			scope.useclass = thingController.useclass;
+			
 			
 			scope.filePath = function(fileId){
 				var activityId = thingController.activityId;
@@ -228,6 +239,7 @@ app.directive("file",function(){
 			scope.cancel = function(){
 				scope.controll.edit = false;
 			};
+			
 		}
 	}
 });
@@ -241,6 +253,8 @@ app.directive("text", function(){
 			
 			scope.controll = {edit: false};
 			
+			var backEndAdress = thingController.backEndAdress;
+			
 			scope.deleteThing = function(thing){
 				thingController.deleteThing(thing);
 			}
@@ -276,6 +290,98 @@ app.directive("text", function(){
 				
 				return "";
 			};
+			
+			/*
+			 * 
+			 * Hantering av subThings
+			 * 
+			 */
+			
+			scope.addSubFile = false;
+			scope.addSubToDo = false;
+			
+			scope.showAddSubToDo = function(){
+				return scope.addSubToDo;
+			};
+			
+			scope.showAddSubFile = function(){
+				return scope.addSubFile;
+			}
+			
+			scope.closeAddSubthing = function(){
+				scope.addSubFile = false;
+				scope.addSubToDo = false;
+			}
+			
+			scope.showShubThings = function(){
+				return !scope.addSubFile && !scope.addSubToDo;
+			};
+			
+			scope.prepAddingNewSubthingToDo = function(){
+				scope.addSubFile = false;
+				scope.addSubToDo = true;
+				
+				if(scope.thing.things == undefined){
+					scope.thing.things = [];
+				}
+				
+				scope.newSubthing = 
+				{ 
+					type: "TODO",
+					
+				};
+				
+			}
+			
+			scope.prepAddingNewSubthingFile = function(){
+				
+				scope.addSubFile = true;
+				scope.addSubToDo = false;
+				
+				if(scope.thing.things == undefined){
+					scope.thing.things = [];
+				}
+				
+				scope.newSubthing = 
+					{ 
+						fileId: generateUIDNotMoreThan1million(), 
+						type: "FILE",
+						
+					};
+			};
+			
+			function generateUIDNotMoreThan1million() {
+			    return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
+			};
+			
+			scope.setParmForSubThingFileUpload = function(){
+				return {target: backEndAdress+'/file/upload', singleFile:true, testChunks:false};
+			}
+			
+			scope.subThingFileAdded =  function (event, file, $flow) {
+				file.flowObj.opts.query.fileName = scope.newSubthing.fileId;
+			};
+			
+			scope.subThingFileUploaded = function($file, $message){
+				scope.newSubthing.name = $file.name;
+				scope.newSubthing.fileType = $file.file.type;
+				
+				var subthing = angular.copy(scope.newSubthing);
+				
+				scope.thing.things.push(subthing);
+				
+				scope.addSubFile = false;
+				scope.addSubToDo = false;
+				
+			};
+			
+			scope.creteaSubthingTodo = function(newSubthing){
+				var subthing = angular.copy(newSubthing);
+				scope.thing.things.push(subthing);
+				
+				scope.addSubFile = false;
+				scope.addSubToDo = false;
+			}
 		}
 	}
 });

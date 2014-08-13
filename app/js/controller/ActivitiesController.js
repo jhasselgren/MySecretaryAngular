@@ -4,6 +4,30 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 	
 	var interval;
 	
+	window.onbeforeunload = function (event) {
+		if($scope.modified){
+			var message = 'Sure you want to leave?';
+			if (typeof event == 'undefined') {
+				event = window.event;
+			}
+			if (event) {
+				event.returnValue = message;
+			}
+			return message;
+		}
+	};
+	
+	$scope.$on('$locationChangeStart', function (event, next, current) {
+		if($scope.modified){
+	        event.preventDefault();
+	        var answer = confirm("Are you sure you want to leave this page?")
+	        if (answer) {
+	            $location.url($location.url(next).hash());
+	            $rootScope.$apply();
+	        }
+		}
+    });
+	
 	function init(){
 		
 //		var activity = $scope.data.activity = {};
@@ -58,20 +82,6 @@ app.controller('ActivityController', function($scope, $sce, $location, $interval
 			},1000);
 		};
 	}, true);
-	
-//	$scope.$watch('data.currentActivity.shortDescription', function(newVal, oldVal){
-//		if(newVal != oldVal){
-//			if(timeout){
-//				$timeout.cancel(timeout);
-//			}
-//			
-//			timeout = $timeout(function(){
-//				console.log("data.currentActivity.shortDescription changed");
-//				$scope.modified = true;
-//				console.log("modified = true");
-//			},1000);
-//		};
-//	});
 	
 	$scope.$on('currentActivity.updated', function(event){
 		console.log(event);
