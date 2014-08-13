@@ -124,6 +124,9 @@ h1 {
 .featurette .panel-footer {
   color: #333;
 }
+.featurette .panel-footer .well {
+  border: 1px solid #333;
+}
 .featurette .panel-footer a {
   color: #333;
 }

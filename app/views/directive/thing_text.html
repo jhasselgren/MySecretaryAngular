@@ -1,4 +1,4 @@
-<div ng-if="thing.type == 'TEXT'" class="featurette" id="sec2">
+<div class="featurette" id="sec2">
 	<div class="container">
 		<div ng-show="!editMode()" class="row">
 			<div  class="pull-right">
@@ -108,7 +108,7 @@
 			<div ng-show="(thing.things | filter: {type: 'FILE'}).length > 0 && showShubThings()" class="panel-footer">
 				<h3>Files</h3>
 				<div ng-repeat="subthing in filteredThings = (thing.things | filter: {type: 'FILE'})">
-					<thing file thing="subthing"></thing>
+					<ng-thing-file thing="subthing"></ng-thing-file>
 				</div>
 			</div>
 			<div ng-show="(thing.things | filter: {type: 'TODO'}).length > 0  && showShubThings()" class="panel-footer">

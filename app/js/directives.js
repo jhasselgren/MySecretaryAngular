@@ -163,12 +163,40 @@ app.directive("thingCreate",function(Data, backEndAdress) {
 	}
 });
 
-app.directive("thing", function(Data, backEndAdress, activityDataService){
+//app.directive("ngThing", function(Data, backEndAdress, activityDataService){
+//	return{
+//		restrict: "E",
+//		scope: {},
+//		controller: function($rootScope, $scope){
+//			
+//			this.activityId = Data.currentActivity.id;
+//			this.backEndAdress = backEndAdress;
+//			this.useclass = ($scope.useclass) ? $scope.useclass : "";
+//			
+//			this.save = function(){
+//				return Data.saveActivity();
+//			};
+//			
+//			this.deleteThing = function(thing){
+//				
+//				var activityId = Data.currentActivity.id;
+//				
+//				activityDataService.deleteThing(activityId,thing).success(function(data){
+//					Data.setCurrentActivity(data);
+//				});
+//			};
+//		}
+//	}
+//});
+
+app.directive("ngThingFile",function(Data, backEndAdress, activityDataService){
 	return{
-		scope: {
+		restrict: "E",
+		scope:{
 			thing: "=",
 			useclass: "@", 
-		},
+		},	
+		templateUrl: "views/directive/thing_file.html",
 		controller: function($rootScope, $scope){
 			
 			this.activityId = Data.currentActivity.id;
@@ -186,28 +214,11 @@ app.directive("thing", function(Data, backEndAdress, activityDataService){
 				activityDataService.deleteThing(activityId,thing).success(function(data){
 					Data.setCurrentActivity(data);
 				});
-			}
-		}
-	}
-});
-
-app.directive("file",function(){
-	return{
-		restrict: "A",
-		require: "thing",		
-		templateUrl: "views/directive/thing_file.html",
-		transclude: true,
+			};
+		},
 		link: function(scope, element, attrs, thingController){
-			
-			
-			
-			
-			
 			scope.controll = {edit: false};
-			
 			scope.useclass = thingController.useclass;
-			
-			
 			scope.filePath = function(fileId){
 				var activityId = thingController.activityId;
 				var backEndAdress = thingController.backEndAdress;
@@ -244,17 +255,37 @@ app.directive("file",function(){
 	}
 });
 
-app.directive("text", function(){
+app.directive("ngThingText", function(Data, backEndAdress, activityDataService){
 	return{
-		restrict: "A",
-		require: "thing",		
+		restrict: "E",
+		scope:{
+			thing: "=",
+			useclass: "@",
+		},
 		templateUrl: "views/directive/thing_text.html",
+		controller: function($rootScope, $scope){
+			
+			this.activityId = Data.currentActivity.id;
+			this.backEndAdress = backEndAdress;
+			this.useclass = ($scope.useclass) ? $scope.useclass : "";
+			
+			this.save = function(){
+				return Data.saveActivity();
+			};
+			
+			this.deleteThing = function(thing){
+				
+				var activityId = Data.currentActivity.id;
+				
+				activityDataService.deleteThing(activityId,thing).success(function(data){
+					Data.setCurrentActivity(data);
+				});
+			};
+		},
 		link: function(scope, element, attrs, thingController){
 			
 			scope.controll = {edit: false};
-			
-			var backEndAdress = thingController.backEndAdress;
-			
+						
 			scope.deleteThing = function(thing){
 				thingController.deleteThing(thing);
 			}
@@ -283,7 +314,6 @@ app.directive("text", function(){
 			
 			scope.filePath = function(fileId){
 				var activityId = thingController.activityId;
-				var backEndAdress = thingController.backEndAdress;
 				if(fileId && activityId){
 					return backEndAdress + '/file/download/'+activityId+'/'+fileId;
 				}

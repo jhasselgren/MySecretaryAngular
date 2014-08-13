@@ -1,47 +1,44 @@
 <div ng-class="useclass">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-1 text-center pull-left">
-				{{ thing.created | date : 'd'}}<br />
-				{{ thing.created | date : 'MMMM'}}
+	<div class="row">
+		<div class="col-xs-1 text-center">
+			{{ thing.created | date : 'd'}}<br />
+			{{ thing.created | date : 'MMMM'}}
+		</div>
+		<div class="col-xs-11 well" ng-switch="thing.fileType">
+			<div class="pull-right">
+				<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a href ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
 			</div>
-			
-			<div class="col-xs-11 well well-lg" ng-switch="thing.fileType">
-				<div class="pull-right">
-					<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a href ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
+			<div ng-if="!editMode()">
+				<h4>
+					<i ng-switch-default class="fa fa-file-o  fa-border"></i>
+					<i ng-switch-when="zip" class="fa fa-file-archive-o fa-border"></i>
+					<i ng-switch-when="excel" class="fa fa-file-excel-o fa-border"></i>
+					<i ng-switch-when="pdf" class="fa fa-file-pdf-o fa-border"></i>
+					<i ng-switch-when="word" class="fa fa-file-word-o fa-border"></i>
+					<i ng-switch-when="powerpoint" class="fa fa-file-powerpoint-o fa-border"></i>
+					{{ thing.name }} 
+				</h4>
+				<div ng-show="!showDetails">
+					<p></p>
+					<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
 				</div>
-				<div ng-if="!editMode()">
-					<h2>
-						<i ng-switch-default class="fa fa-file-o  fa-border"></i>
-						<i ng-switch-when="zip" class="fa fa-file-archive-o fa-border"></i>
-						<i ng-switch-when="excel" class="fa fa-file-excel-o fa-border"></i>
-						<i ng-switch-when="pdf" class="fa fa-file-pdf-o fa-border"></i>
-						<i ng-switch-when="word" class="fa fa-file-word-o fa-border"></i>
-						<i ng-switch-when="powerpoint" class="fa fa-file-powerpoint-o fa-border"></i>
-						{{ thing.name }} 
-					</h2>
-					<div ng-show="!showDetails" class="col-xs-12">
-						<p></p>
-						<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
-					</div>
-					<div ng-show="showDetails" class="col-xs-12">
-						<p ng-bind-html="thing.description"></p>
-						<i class="fa fa-angle-up fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
-					</div>
+				<div ng-show="showDetails">
+					<p ng-bind-html="thing.description"></p>
+					<i class="fa fa-angle-up fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
 				</div>
-				<div ng-if="editMode()">
-					<div class="form-group">
-						<label>Name</label>
-						<input class="form-control" ng-model="thing.name">
-					</div>
-					<div class="form-group">
-						<label>Description</label>
-						<text-angular ng-model="thing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
-					</div>
-					<div class="form-group">
-						<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-						<button type="button" class="btn btn-default" ng-click="save()">Save</button>
-					</div>
+			</div>
+			<div ng-if="editMode()">
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" ng-model="thing.name">
+				</div>
+				<div class="form-group">
+					<label>Description</label>
+					<text-angular ng-model="thing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+					<button type="button" class="btn btn-default" ng-click="save()">Save</button>
 				</div>
 			</div>
 		</div>
