@@ -10,6 +10,22 @@ app.directive('appVersion', ['version', function(version) {
   }]);
 
 
+app.directive('scrollToBookmark', function() {
+    return {
+      link: function(scope, element, attrs) {
+        var value = attrs.scrollToBookmark;
+        element.click(function() {
+          scope.$apply(function() {
+            var selector = "[scroll-bookmark='"+ value +"']";
+            var element = $(selector);
+            if(element.length)
+              window.scrollTo(0, element[0].offsetTop - 100);  // Don't want the top to be the exact element, -100 will go to the top for a little bit more
+          });
+        });
+      }
+    }
+});
+
 
 app.directive("formInput", function () {
     return {
@@ -163,32 +179,6 @@ app.directive("thingCreate",function(Data, backEndAdress) {
 	}
 });
 
-//app.directive("ngThing", function(Data, backEndAdress, activityDataService){
-//	return{
-//		restrict: "E",
-//		scope: {},
-//		controller: function($rootScope, $scope){
-//			
-//			this.activityId = Data.currentActivity.id;
-//			this.backEndAdress = backEndAdress;
-//			this.useclass = ($scope.useclass) ? $scope.useclass : "";
-//			
-//			this.save = function(){
-//				return Data.saveActivity();
-//			};
-//			
-//			this.deleteThing = function(thing){
-//				
-//				var activityId = Data.currentActivity.id;
-//				
-//				activityDataService.deleteThing(activityId,thing).success(function(data){
-//					Data.setCurrentActivity(data);
-//				});
-//			};
-//		}
-//	}
-//});
-
 app.directive("ngThingFile",function(Data, backEndAdress, activityDataService){
 	return{
 		restrict: "E",
@@ -201,7 +191,6 @@ app.directive("ngThingFile",function(Data, backEndAdress, activityDataService){
 			
 			this.activityId = Data.currentActivity.id;
 			this.backEndAdress = backEndAdress;
-			this.useclass = ($scope.useclass) ? $scope.useclass : "";
 			
 			this.save = function(){
 				return Data.saveActivity();
@@ -218,7 +207,6 @@ app.directive("ngThingFile",function(Data, backEndAdress, activityDataService){
 		},
 		link: function(scope, element, attrs, thingController){
 			scope.controll = {edit: false};
-			scope.useclass = thingController.useclass;
 			scope.filePath = function(fileId){
 				var activityId = thingController.activityId;
 				var backEndAdress = thingController.backEndAdress;
@@ -267,7 +255,6 @@ app.directive("ngThingText", function(Data, backEndAdress, activityDataService){
 			
 			this.activityId = Data.currentActivity.id;
 			this.backEndAdress = backEndAdress;
-			this.useclass = ($scope.useclass) ? $scope.useclass : "";
 			
 			this.save = function(){
 				return Data.saveActivity();
@@ -281,6 +268,33 @@ app.directive("ngThingText", function(Data, backEndAdress, activityDataService){
 					Data.setCurrentActivity(data);
 				});
 			};
+			
+			
+			function groupSubthings(){
+		        var itemsPerRow = 3;
+		        var input = $scope.thing.things;
+	        	
+		        var out = [];
+		        for (var i = 0; i < input.length; i++) {
+		          var rowElementIndex = i % itemsPerRow;
+		          var rowIndex = (i - rowElementIndex) / itemsPerRow;
+		          var row;
+		          if (rowElementIndex === 0) {
+		            row = [];
+		            out[rowIndex] = row;
+		          } else {
+		            row = out[rowIndex];
+		          }
+		          
+		          row[rowElementIndex] = input[i];
+		        }
+		          
+		        return out;
+		      };
+			
+			
+			$scope.grouped = groupSubthings();
+			
 		},
 		link: function(scope, element, attrs, thingController){
 			
@@ -327,6 +341,7 @@ app.directive("ngThingText", function(Data, backEndAdress, activityDataService){
 			 * 
 			 */
 			
+						
 			scope.addSubFile = false;
 			scope.addSubToDo = false;
 			
@@ -411,7 +426,95 @@ app.directive("ngThingText", function(Data, backEndAdress, activityDataService){
 				
 				scope.addSubFile = false;
 				scope.addSubToDo = false;
-			}
+			};
+			
+			scope.opened = false;
+			
+			scope.open = function($event) {
+			    $event.preventDefault();
+			    $event.stopPropagation();
+	
+			    scope.opened = true;
+			};
+			
+			scope.toggleMin = function() {
+				scope.minDate = scope.minDate ? null : new Date();
+			};
+			 
+			scope.toggleMin();
+			
+			
+			
+			
+		}
+	}
+});
+
+app.directive("thingTodo", function(Data, activityDataService){
+	return{
+		restrict: "E",
+		scope:{
+			thing: "=",
+			useclass: "@", 
+		},	
+		templateUrl: "views/directive/thing_todo.html",
+		controller: function($rootScope, $scope){
+			
+			this.activityId = Data.currentActivity.id;
+			
+			this.save = function(){
+				return Data.saveActivity();
+			};
+			
+			this.deleteThing = function(thing){
+				
+				var activityId = Data.currentActivity.id;
+				
+				activityDataService.deleteThing(activityId,thing).success(function(data){
+					Data.setCurrentActivity(data);
+				});
+			};
+		},
+		link: function(scope, element, attrs, thingController){
+			scope.controll = {edit: false};
+			
+			scope.changeEdit = function(){
+				scope.controll.edit = !scope.controll.edit
+			};
+			
+			scope.editMode = function(){
+				return scope.controll.edit;
+			};
+			
+			scope.save = function(){
+				thingController.save().success(function(data){
+					scope.controll.edit = false;
+				});
+			};
+			
+			scope.deleteThing = function(thing){
+				thingController.deleteThing(thing);
+			};
+			
+			scope.cancel = function(){
+				scope.controll.edit = false;
+			};
+			
+			scope.toggleMin = function() {
+				scope.minDate = scope.minDate ? null : new Date();
+			};
+			 
+			scope.toggleMin();
+			
+			scope.opened = false;
+			
+			scope.open = function($event) {
+			    $event.preventDefault();
+			    $event.stopPropagation();
+	
+			    scope.opened = true;
+			};
+			
 		}
 	}
 });

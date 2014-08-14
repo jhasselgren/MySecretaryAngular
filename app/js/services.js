@@ -15,7 +15,7 @@ app.factory("Data", function($rootScope, activityDataService) {
 			setCurrentActivity: function (activity){
 				this.currentActivity = activity;
 				
-				$rootScope.$broadcast('currentActivity.updated')
+				//$rootScope.$broadcast('currentActivity.updated')
 			},
 			
 			addThing: function(thing){
@@ -31,18 +31,18 @@ app.factory("Data", function($rootScope, activityDataService) {
 			setCurrentThing: function (thing){
 				this.currentThing = thing;
 				
-				$rootScope.$broadcast('currentThing.updated')
+				//$rootScope.$broadcast('currentThing.updated')
 			},
 			
 			addSubThing: function(subthing){
 				this.currentThing.thins.push(subthing);
-				$rootScope.$broadcast('currentThing.updated')
+				//$rootScope.$broadcast('currentThing.updated')
 			},
 			
 			setAllActivities: function (activitiesList){
 				this.allActivities = activitiesList;
 				
-				$rootScope.$broadcast('allActivities.updated')
+				//$rootScope.$broadcast('allActivities.updated')
 			}
 	}
 	

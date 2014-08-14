@@ -1,0 +1,67 @@
+<div>
+	<div ng-show="!editMode()">
+		<h4 ng-click="thing.completed = !thing.completed"  style="cursor: pointer;">
+			<i class="fa fa-square-o"></i>
+			{{ thing.name }}
+		</h4>
+		<div class="row">
+			<div class="col-xs-4">
+				<p>
+					Created: 
+					{{ thing.created | date : 'yyyy-MM-dd'}}
+				</p>
+			</div>
+			<div class="col-xs-4">
+				<p>
+					Deadline: 
+					{{ thing.deadline | date : 'yyyy-MM-dd'}}
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div ng-click="thing.progress =  thing.progress-10" class="pull-left" style="width: 2%; margin-right: 5px; cursor: pointer;">
+				<i class="fa fa-chevron-left"></i>
+			</div>
+			<progressbar style="width:95%" class="pull-left progress-striped active" value="thing.progress"></progressbar>
+			<div ng-click="thing.progress =  thing.progress+10" class="pull-right" style="margin-left: 5px; cursor: pointer;">
+				<i class="fa fa-chevron-right"></i>
+			</div>
+		</div>
+		<div class="row">
+			<div ng-show="!showDetails" class="col-xs-12">
+				<i class="fa fa-ellipsis-h fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer;"></i>
+			</div>
+			<div ng-show="showDetails" class="well well-sm">
+				<div>
+					<p ng-bind-html="thing.description"></p>
+					<hr style="margin: 5px 2px;">
+					<i class="fa fa-angle-up fa-1x" ng-click="showDetails = ! showDetails" style="cursor: pointer; "></i> | 
+					<i class="fa fa-pencil" ng-click="changeEdit()"></i> | <i class="fa fa-trash-o" ng-click="deleteThing(thing)"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-show="editMode()">
+		<form-input label="Title" model="thing.name"></form-input>
+		
+		<div class="form-group">
+			<label>Description</label>
+			<text-angular ng-model="newThing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+		</div>
+		
+		<form-input label="Deadline" model="thing.deadling" type="text"></form-input>
+		<!-- 
+		<div class="form-group">
+			<p class="input-group">
+            	<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="thing.deadline" is-open="opened" min-date="minDate" starting-day="1" close-text="Close" />
+              	<span class="input-group-btn">
+                	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              	</span>
+            </p>
+        </div>
+		 -->
+		<div class="form-group">
+			<button type="button" class="btn btn-default" ng-click="save()"><i class="fa fa-save"></i></button>
+		</div>
+	</div>
+</div>

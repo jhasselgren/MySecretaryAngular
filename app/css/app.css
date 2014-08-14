@@ -127,6 +127,10 @@ h1 {
 .featurette .panel-footer .well {
   border: 1px solid #333;
 }
+.featurette .panel-footer .well .well {
+  color: #fff;
+  background-color: #545455;
+}
 .featurette .panel-footer a {
   color: #333;
 }
@@ -177,7 +181,7 @@ h1 {
 .panel-heading {
   padding: 10px 5px;
 }
-.panel-footer .progress {
+.todo-widget .progress {
   margin-top: 20px;
 }
 footer {

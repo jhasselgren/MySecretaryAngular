@@ -1,4 +1,4 @@
-<div ng-class="useclass">
+<div class="{{useclass}}" scroll-bookmark="{{thing.id}}">
 	<div class="row">
 		<div class="col-xs-1 text-center">
 			{{ thing.created | date : 'd'}}<br />
@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-xs-11 well" ng-switch="thing.fileType">
 			<div class="pull-right">
-				<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a href ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
+				<a target="_self" ng-href="{{filePath(thing.fileId)}}" download="thing.name"><i class="fa fa-download"></i> Download</a> | <a scroll-to-bookmark="{{thing.id}}" href ng-click="changeEdit()"><i class="fa fa-pencil" ></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
 			</div>
 			<div ng-if="!editMode()">
 				<h4>
@@ -37,8 +37,7 @@
 					<text-angular ng-model="thing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
 				</div>
 				<div class="form-group">
-					<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-					<button type="button" class="btn btn-default" ng-click="save()">Save</button>
+					<button scroll-to-bookmark="{{thing.id}}" type="button" class="btn btn-default" ng-click="save()"><i class="fa fa-save"></i></button>
 				</div>
 			</div>
 		</div>

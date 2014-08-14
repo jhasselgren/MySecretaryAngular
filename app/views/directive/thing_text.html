@@ -1,8 +1,8 @@
 <div class="featurette" id="sec2">
-	<div class="container">
+	<div class="container" scroll-bookmark="{{thing.id}}">
 		<div ng-show="!editMode()" class="row">
 			<div  class="pull-right">
-		 		<a href ng-click="changeEdit()"><i class="fa fa-pencil"></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
+		 		<a scroll-to-bookmark="{{thing.id}}" href ng-click="changeEdit()"><i class="fa fa-pencil"></i></a> | <a href ng-click="deleteThing(thing)"><i class="fa fa-trash-o"></i></a>
 			</div>
 			<div class="col-xs-1 text-center pull-left">
 				{{ thing.created | date : 'd'}}<br />
@@ -15,9 +15,9 @@
 						<span ng-bind-html="thing.text"></span>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-4" ng-repeat="subThing in thing.things">
-						<div class="panel panel-default" >
+				<div class="row" ng-repeat="rows in grouped">
+					<div class="pull-left col-sm-4" ng-repeat="subThing in rows">
+						<div class="panel panel-default">
 							<div class="panel-heading text-center" ng-click="showDetails = ! showDetails" style="cursor: pointer; overflow: hidden; white-space: nowrap;">
 								<p>
 									<b>{{ subThing.name }}</b>
@@ -32,7 +32,7 @@
 									<span ng-switch-when="FILE"><a target="_self" ng-href="{{filePath(subThing.fileId)}}" download="subThing.name"><i class="fa fa-file-pdf-o fa-3x"></i></a></span>
 								</p>
 							</div>
-							<div class="panel-footer text-center col-xs-12" ng-show="showDetails">
+							<div class="panel-footer todo-widget text-center col-xs-12" ng-show="showDetails">
 								<div class="row" ng-bind-html="subThing.description">
 								</div>
 								<div ng-if="subThing.type=='TODO'" class="row-fluid">
@@ -44,6 +44,57 @@
 									</div>
 									<progressbar class="progress-striped active" value="subThing.progress"></progressbar>
 								</div>
+							</div>
+						</div>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<button class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingFile()">Add File</button>
+							<button class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingToDo()">Add ToDo</button>
+						</div>
+						<div class="panel-footer" ng-show="showAddSubFile()">
+							<div  class="pull-right">
+					 			<a href ng-click="closeAddSubthing()"><i class="fa fa-times"></i></a>
+							</div>
+							<h4>Add file:</h4>
+							<div class="form-group">
+								<label>Description</label>
+								<text-angular ng-model="newSubthing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+							</div>
+					
+					        <div flow-init="setParmForSubThingFileUpload()" flow-files-submitted="$flow.upload()" flow-file-success="subThingFileUploaded($file, $message)" flow-file-added="subThingFileAdded($event, $file)">
+					        	<div flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style" class="alert alert-info">
+					        		<p><span class="btn btn-primary" flow-btn><i class="fa fa-upload"></i> Upload File</span> OR drag and drop</p>
+					        	</div>
+					        </div>
+						</div>
+						<div class="panel-footer" ng-show="showAddSubToDo()">
+							<div  class="pull-right">
+					 			<a href ng-click="closeAddSubthing()"><i class="fa fa-times"></i></a>
+							</div>
+							<h4>Add ToDo:</h4>
+							<div class="form-group">
+								<label>Title</label>
+								<input class="form-control" ng-model="newSubthing.name">
+							</div>
+							<div class="form-group">
+								<label>Description</label>
+								<text-angular ng-model="newSubthing.description" ta-toolbar="[['p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
+							</div>
+							<div class="form-group">
+								<p><label>Deadline</label></p>
+								<p class="input-group">
+					            	<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newSubthing.deadline" is-open="opened" min-date="minDate" starting-day="1" close-text="Close" />
+					              	<span class="input-group-btn">
+					                	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					              	</span>
+					            </p>
+					        </div>
+							
+							<div class="form-group">
+								<button scroll-to-bookmark="{{thing.id}}" class="btn btn-sm btn-info" ng-click="creteaSubthingTodo(newSubthing)">Create ToDo</button>
 							</div>
 						</div>
 					</div>
@@ -61,9 +112,9 @@
 				<div class="form-group">
 					<text-angular ng-model="thing.text" ta-toolbar="[['h1','h2','h3','h4','p'],['bold','italics', 'underline'],['ul','ol'],['html']]"></text-angular>
 				</div>
-				<div class="form-group">
-					<button class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingFile()">Add File</button>
-					<button class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingToDo()">Add ToDo</button>
+				<div scroll-bookmark="{{thing.id}}-addSubthing" class="form-group">
+					<button scroll-to-bookmark="{{thing.id}}-addSubthing" class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingFile()">Add File</button>
+					<button scroll-to-bookmark="{{thing.id}}-addSubthing"class="btn btn-info btn-sm" ng-click="prepAddingNewSubthingToDo()">Add ToDo</button>
 				</div>
 			</div>
 			<div class="panel-footer" ng-show="showAddSubFile()">
@@ -97,14 +148,18 @@
 				</div>
 				<div class="form-group">
 					<p><label>Deadline</label></p>
-					<div style="display:inline-block; margin:0px;">
-				        <datepicker ng-model="newSubthing.deadline" starting-day="1" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
-				    </div>
-				</div>
+					<p class="input-group">
+		            	<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newSubthing.deadline" is-open="opened" min-date="minDate" starting-day="1" close-text="Close" />
+		              	<span class="input-group-btn">
+		                	<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		              	</span>
+		            </p>
+		        </div>
 				<div class="form-group">
 					<button class="btn btn-sm btn-info" ng-click="creteaSubthingTodo(newSubthing)">Create ToDo</button>
 				</div>
 			</div>
+			
 			<div ng-show="(thing.things | filter: {type: 'FILE'}).length > 0 && showShubThings()" class="panel-footer">
 				<h3>Files</h3>
 				<div ng-repeat="subthing in filteredThings = (thing.things | filter: {type: 'FILE'})">
@@ -114,7 +169,13 @@
 			<div ng-show="(thing.things | filter: {type: 'TODO'}).length > 0  && showShubThings()" class="panel-footer">
 				<h3>ToDo</h3>
 				<div ng-repeat="subthing in filteredThings = (thing.things | filter: {type: 'TODO'})">
-					TODO
+					<div class="row">
+						<div class="col-xs-1"></div>
+						<div class="col-xs-11 well">
+							<thing-todo thing="subthing"></thing-todo>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
